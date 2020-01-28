@@ -1,7 +1,7 @@
 # DonationChannel
-更快捷地捐赠物资                         
+武汉新型冠状病毒防疫物资信息捐赠通道 -> 采用更便捷的展示方案
 
-## 快速开始
+## Quick Start
 
 ```javascript
 
