@@ -1,0 +1,18 @@
+.hospital-card {
+    margin: 40px 60px;
+}
+
+.card-supplies-name {
+     color: gray;
+     font-size: 12px;
+ }
+
+.card-supplies-number {
+     font-size: 16px;
+     font-weight: bold;
+ }
+
+.card-action-icon {
+    width: 20%;
+    margin: 0 auto;
+}
