@@ -2,8 +2,10 @@ import React from "react";
 import { setDemandsFilter } from "../../redux/demand/index";
 import { connect } from "react-redux";
 import { SearchBar, Button } from "antd-mobile";
+import { withRouter } from "react-router-dom";
 
 @connect(mapStateToProps, mapDispatchToProps)
+@withRouter
 class Search extends React.Component {
   state = {
     filter: {
@@ -26,6 +28,7 @@ class Search extends React.Component {
   handleSubmit = () => {
     const { filter } = this.state;
     this.props.submit(filter);
+    this.props.history.push("/hospitals");
   };
 
   render() {
