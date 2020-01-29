@@ -1,28 +1,60 @@
 import React from "react";
-import { getDemands } from "../../redux/demand/index";
+import { setDemandsFilter } from "../../redux/demand/index";
 import { connect } from "react-redux";
-import { Button } from "antd-mobile";
+import { SearchBar, Button } from "antd-mobile";
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Search extends React.Component {
+  state = {
+    filter: {
+      cityCode: "",
+      supplies: []
+    }
+  };
+
+  componentDidMount() {
+    const { filter } = this.props;
+    this.setState({
+      filter
+    });
+  }
+
+  handleCityCodeChange = value => {
+    this.setState({ filter: { cityCode: value } });
+  };
+
+  handleSubmit = () => {
+    const { filter } = this.state;
+    this.props.submit(filter);
+  };
+
   render() {
-    const { onGetDemands, text } = this.props;
+    const {
+      filter: { cityCode }
+    } = this.state;
     return (
       <div>
-        <h1>{text}</h1>
-        <Button onClick={onGetDemands}>click me</Button>
+        <SearchBar
+          value={cityCode}
+          onChange={this.handleCityCodeChange}
+          placeholder="输入捐赠城市"
+          maxLength={8}
+        />
+        <Button onClick={this.handleSubmit}>click me</Button>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { text: state.demand.text };
+  return { filter: state.demand.filter };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onGetDemands: () => dispatch(getDemands)
+    submit: filter => {
+      dispatch(setDemandsFilter(filter));
+    }
   };
 }
 
