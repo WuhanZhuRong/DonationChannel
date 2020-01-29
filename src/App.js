@@ -1,13 +1,10 @@
 import React from "react";
 import "./App.css";
-import { createStore } from "redux";
 import Search from "./routes/search";
 import Hospitals from "./routes/hospitals";
-import reducer from "./redux/reducer";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
-let store = createStore(reducer);
+import store from "./redux/store";
 
 function App() {
   return (
