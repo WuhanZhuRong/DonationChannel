@@ -1,7 +1,5 @@
 import React from "react";
-import { setDemandsFilter } from "../../redux/demand/index";
 import { connect } from "react-redux";
-
 import { SearchBar, Button, Tag, Flex } from "antd-mobile";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
@@ -99,21 +97,32 @@ function Supply(props) {
 @connect(mapStateToProps, mapDispatchToProps)
 class Search extends React.Component {
   state = {
-    filter: {
-      cityCode: "",
-      supplies: []
-    }
+    cityCode: "",
+    supplies: []
   };
 
   componentDidMount() {
-    const { filter } = this.props;
+    const {
+      filter: { supplies, cityCode }
+    } = this.props;
     this.setState({
-      filter
+      cityCode,
+      supplies
     });
   }
 
   handleCityCodeChange = value => {
-    this.setState({ filter: { cityCode: value } });
+    this.setState({ cityCode: value });
+  };
+
+  handleSelect = (id, selected) => {
+    let supplies = this.state.supplies || [];
+    if (selected) {
+      supplies.push(id);
+    } else {
+      supplies.splice(supplies.indexOf(id), 1);
+    }
+    this.setState({ supplies });
   };
 
   handleSubmit = () => {
@@ -128,9 +137,8 @@ class Search extends React.Component {
   };
 
   render() {
-    const {
-      filter: { cityCode }
-    } = this.state;
+    const { cityCode } = this.state;
+    const { handleSelect } = this;
     return (
       <Container>
         <MainContent>
