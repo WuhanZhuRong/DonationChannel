@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Badge, WingBlank, WhiteSpace, Card, Icon, Flex, Grid } from "antd-mobile"
+import { Badge, WingBlank, WhiteSpace, Card, Icon, Flex, Grid, Accordion, List, Checkbox } from "antd-mobile"
 import './style.css'
 
 const hospitalList = [{
@@ -68,12 +68,27 @@ const hospitalList = [{
     "审核状态": "已审核"
   }];
 
+const supplies = ["医用外科口罩","n95口罩","一次性医用口罩","防护面罩","防冲击眼罩","防护目镜","防护眼镜","一次性医用帽子","医学防护服","手术衣","反穿隔离衣","医用一次性乳胶手套","长袖橡胶手套","长筒胶鞋","防水防污染鞋套","防污染靴",
+  "酒精","消毒液","过氧乙酸","皮肤消毒液","测体温设备","空气消毒设备","医用紫外线消毒车"
+
+];
+
 @connect(mapStateToProps, mapDispatchToProps)
 class Hospitals extends React.Component {
   render() {
     return (
         <div>
-          <div>checkbox list(placeholder)</div>
+          <div>
+            <Accordion defaultActiveKey="0" className="my-accordion" onChange={this.onChange}>
+              <Accordion.Panel header="物资列表">
+                <List>
+                {supplies.map(item => (
+                    <Checkbox.CheckboxItem key={item} >{item}</Checkbox.CheckboxItem>
+                ))}
+                </List>
+              </Accordion.Panel>
+            </Accordion>
+          </div>
           <WhiteSpace />
           <div>
             <WingBlank size='md'>
