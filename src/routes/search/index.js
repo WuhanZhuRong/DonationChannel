@@ -1,10 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { SearchBar, Button, Tag, Flex } from "antd-mobile";
+import { List, Button, Tag, Flex, Picker } from "antd-mobile";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import { setDemandsFilter } from "../../redux/demand/index";
+
+const districtData = require("../../assets/location.json");
 
 const TagContainer = styled.div`
   display: flex;
@@ -78,11 +80,14 @@ const supplies = [
 
 function Supply(props) {
   const content = props.supplies.map(supply => (
-    <div>
+    <div key={supply.name}>
       <Title>{supply.name}</Title>
       <TagContainer>
         {supply.types.map(type => (
-          <Tag onChange={selected => props.handleSelect(type.id, selected)}>
+          <Tag
+            key={type.id}
+            onChange={selected => props.handleSelect(type.id, selected)}
+          >
             {type.name}
           </Tag>
         ))}
@@ -93,12 +98,39 @@ function Supply(props) {
   return content;
 }
 
+const CustomChildren = props => (
+  <div
+    onClick={props.onClick}
+    style={{ backgroundColor: "#fff", paddingLeft: 15 }}
+  >
+    <div
+      className="test"
+      style={{ display: "flex", height: "45px", lineHeight: "45px" }}
+    >
+      <div
+        style={{
+          flex: 1,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap"
+        }}
+      >
+        {props.children}
+      </div>
+      <div style={{ textAlign: "right", color: "#888", marginRight: 15 }}>
+        {props.extra}
+      </div>
+    </div>
+  </div>
+);
+
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class Search extends React.Component {
   state = {
-    cityCode: "",
-    supplies: []
+    cityCode: [],
+    supplies: [],
+    antdDistrict: []
   };
 
   componentDidMount() {
@@ -106,8 +138,31 @@ class Search extends React.Component {
       filter: { supplies, cityCode }
     } = this.props;
     this.setState({
-      cityCode,
       supplies
+    });
+
+    let cityCodeArr = [];
+    let antdDistrict = [];
+    Object.keys(districtData).forEach(index => {
+      let itemLevel1 = {};
+      itemLevel1.value = districtData[index].code;
+      itemLevel1.label = districtData[index].name;
+      itemLevel1.children = [];
+      let data = districtData[index].cities;
+      Object.keys(data).forEach(index => {
+        if (data[index].code === cityCode) {
+          cityCodeArr = [itemLevel1.code, cityCode];
+        }
+        let itemLevel2 = {};
+        itemLevel2.value = data[index].code;
+        itemLevel2.label = data[index].name;
+        itemLevel1.children.push(itemLevel2);
+      });
+      antdDistrict.push(itemLevel1);
+    });
+    this.setState({
+      antdDistrict,
+      cityCode: cityCodeArr
     });
   }
 
@@ -129,23 +184,32 @@ class Search extends React.Component {
     const { supplies, cityCode } = this.state;
     this.props.submit({
       supplies,
-      cityCode
+      cityCode: cityCode.length >= 2 && cityCode[1]
     });
     this.props.history.push("/hospitals");
   };
 
+  handleJump = () => {
+    this.props.history.push("/hospitals");
+  };
+
   render() {
-    const { cityCode } = this.state;
+    const { cityCode, antdDistrict } = this.state;
     const { handleSelect } = this;
     return (
       <Container>
         <MainContent>
-          <SearchBar
-            value={cityCode}
-            onChange={this.handleCityCodeChange}
-            placeholder="输入捐赠城市"
-            maxLength={8}
-          />
+          <List style={{ backgroundColor: "white" }}>
+            <Picker
+              title="选择地区"
+              data={antdDistrict}
+              value={cityCode}
+              onChange={v => this.handleCityCodeChange(v)}
+              cols={2}
+            >
+              <CustomChildren>请选择捐赠地区</CustomChildren>
+            </Picker>
+          </List>
           {Supply({ supplies, handleSelect })}
         </MainContent>
         <AffixBottom>
@@ -156,7 +220,7 @@ class Search extends React.Component {
               </Button>
             </Flex.Item>
             <Flex.Item>
-              <Button onClick={this.handleSubmit}>我是游客</Button>
+              <Button onClick={this.handleJump}>我是游客</Button>
             </Flex.Item>
           </Flex>
         </AffixBottom>
