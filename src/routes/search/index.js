@@ -138,10 +138,10 @@ class Search extends React.Component {
       filter: { supplies, cityCode }
     } = this.props;
     this.setState({
-      cityCode,
       supplies
     });
 
+    let cityCodeArr = [];
     let antdDistrict = [];
     Object.keys(districtData).forEach(index => {
       let itemLevel1 = {};
@@ -150,6 +150,9 @@ class Search extends React.Component {
       itemLevel1.children = [];
       let data = districtData[index].cities;
       Object.keys(data).forEach(index => {
+        if (data[index].code == cityCode) {
+          cityCodeArr = [itemLevel1.code, cityCode];
+        }
         let itemLevel2 = {};
         itemLevel2.value = data[index].code;
         itemLevel2.label = data[index].name;
@@ -158,7 +161,8 @@ class Search extends React.Component {
       antdDistrict.push(itemLevel1);
     });
     this.setState({
-      antdDistrict
+      antdDistrict,
+      cityCode: cityCodeArr
     });
   }
 
