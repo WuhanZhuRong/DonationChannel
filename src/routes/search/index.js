@@ -78,11 +78,11 @@ const supplies = [
 
 function Supply(props) {
   const content = props.supplies.map(supply => (
-    <div>
+    <div key={supply.name}>
       <Title>{supply.name}</Title>
       <TagContainer>
         {supply.types.map(type => (
-          <Tag onChange={selected => props.handleSelect(type.id, selected)}>
+          <Tag key={type.id} onChange={selected => props.handleSelect(type.id, selected)}>
             {type.name}
           </Tag>
         ))}
