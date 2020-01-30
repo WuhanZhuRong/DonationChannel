@@ -1,6 +1,7 @@
 .detail-card-header {
     padding: 0 40px;
     height: 120px;
+    width: 100%;
 }
 .detail-card-header-left {
     float: left;
@@ -22,7 +23,8 @@
     justify-content: center; /* 水平居中 */
     align-items: center;
 }
-.detail-card-header-right-phone,.detail-card-header-right-copy .am-icon {
+.detail-card-header-right-phone img, .detail-card-header-right-copy img {
+    width: 28px;
 }
 
 .detail-card-body {
@@ -41,4 +43,20 @@
 
 .detail-card-body-category-list-item .am-list-content,.am-list-extra {
     font-size: 13px !important;
+}
+
+.detail-card-body-category-list-item-count {
+    position: relative;
+    margin-right: 16px;
+}
+
+.detail-card-body-category-list-item-count:after {
+    content: ' ';
+    position: absolute;
+    right: -14px;
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 4px;
 }

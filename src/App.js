@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import Search from "./routes/search";
+import Home from "./routes/home";
 import Hospitals from "./routes/hospitals";
 import Detail from "./routes/detail";
 import { Provider } from "react-redux";
@@ -14,7 +15,9 @@ function App() {
         <Switch>
           <Route path="/hospitals/:id" component={Detail} />
           <Route path="/hospitals" component={Hospitals} />
-          <Route path="/" component={Search} />
+          <Route path="/search" component={Search} />
+          <Route path="/" component={Home} />
+
         </Switch>
       </Router>
     </Provider>

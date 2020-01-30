@@ -1,17 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
-import { WhiteSpace, Card, Icon, List } from "antd-mobile"
-import { hospitalActions } from "../../redux/hospitals";
+import { WhiteSpace, Card, Icon, List, Modal } from "antd-mobile"
+import { hospitalActions, selectHospitalById } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import "./style.css"
+import copy_img from '../../assets/copy.png';
+import phone_img from '../../assets/phone.png';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Detail extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showContactBox: false
+    }
+  }
+
+  componentDidMount() {
+  }
+
   render() {
 
-    console.log('detail id:', this.props.match.params.id);
-
+    const { hospital } = this.props;
+    console.log(hospital, hospital['医院名称']);
     return (
         <div>
           <Card className='detail-card' full>
@@ -19,13 +31,13 @@ class Detail extends React.Component {
                 title={
                   <div className='detail-card-header'>
                     <div className='detail-card-header-left'>
-                      <h3 className='detail-card-header-left-name'>华中科技大学同济医学院附属医院</h3>
+                      <h3 className='detail-card-header-left-name'>{hospital['医院名称']}</h3>
                       <WhiteSpace />
                       <span className='detail-card-header-left-address'>地址： 湖北省武汉市xxxxxx</span>
                     </div>
                     <div className='detail-card-header-right'>
-                      <span className='detail-card-header-right-phone'><Icon type='loading' /></span>
-                      <span className='detail-card-header-right-copy'><Icon type='loading' /></span>
+                      <span className='detail-card-header-right-phone' onClick={() => this.setState({showContactBox: true})}><img src={phone_img} alt='电话' /></span>
+                      <span className='detail-card-header-right-copy'><img src={copy_img} alt='复制' /></span>
                     </div>
                   </div>
                 }
@@ -38,7 +50,7 @@ class Detail extends React.Component {
                       <List className='detail-card-body-category-list'>
                         {[1, 2, 3].map(i => (
                             <List.Item key={i} className='detail-card-body-category-list-item' extra={
-                              '不限'
+                              <span className='detail-card-body-category-list-item-count'>不限</span>
                             }>
                               n95防护口罩
                             </List.Item>
@@ -50,13 +62,26 @@ class Detail extends React.Component {
 
             </Card.Body>
           </Card>
+          <Modal
+              visible={this.state.showContactBox}
+              transparent
+              maskClosable={false}
+              onClose={() => this.setState({showContactBox: false})}
+              title=""
+              footer={[{ text: '我知道了', onPress: () => this.setState({showContactBox: false}) }]}
+          >
+            <div>
+              186****4930<br />
+              001-87654321<br />
+            </div>
+          </Modal>
         </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {};
+function mapStateToProps(state, props) {
+  return {hospital: selectHospitalById(state.hospitals, props.match.params.id)};
 }
 
 function mapDispatchToProps(dispatch) {
