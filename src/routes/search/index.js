@@ -210,17 +210,17 @@ class Search extends React.Component {
               <CustomChildren>请选择捐赠地区</CustomChildren>
             </Picker>
           </List>
-          {Supply({ supplies, handleSelect })}
+          <Supply {...{ supplies, handleSelect }} />
         </MainContent>
         <AffixBottom>
           <Flex>
             <Flex.Item>
               <Button type="primary" onClick={this.handleSubmit}>
-                提交
+                搜索
               </Button>
             </Flex.Item>
             <Flex.Item>
-              <Button onClick={this.handleJump}>我是游客</Button>
+              <Button onClick={this.handleSubmit}>查看全部资源</Button>
             </Flex.Item>
           </Flex>
         </AffixBottom>

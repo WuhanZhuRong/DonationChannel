@@ -21,6 +21,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "lint": "eslint .",
     "test": "react-app-rewired test --env=jsdom"
   },
   "eslintConfig": {
@@ -49,6 +50,7 @@
   "devDependencies": {
     "babel-plugin-import": "^1.13.0",
     "customize-cra": "^0.9.1",
-    "react-app-rewired": "^2.1.5"
+    "react-app-rewired": "^2.1.5",
+    "typescript": "^3.7.5"
   }
 }
