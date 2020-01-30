@@ -22,6 +22,11 @@ const Title = styled.h1`
   font-size: 14px;
   margin-left: 9px;
   margin-bottom: 0px;
+  .select {
+    float: right;
+    color: #108ee9;
+    margin-right: 9px;
+  }
 `;
 const AffixBottom = styled.div`
   flex: 0 0 auto;
@@ -40,7 +45,7 @@ const MainContent = styled.div`
   flex: 1 0 auto;
 `;
 
-const supplies = [
+const allSupplies = [
   {
     name: "口罩",
     types: [
@@ -79,21 +84,38 @@ const supplies = [
 ];
 
 function Supply(props) {
-  const content = props.supplies.map(supply => (
-    <div key={supply.name}>
-      <Title>{supply.name}</Title>
-      <TagContainer>
-        {supply.types.map(type => (
-          <Tag
-            key={type.id}
-            onChange={selected => props.handleSelect(type.id, selected)}
+  const content = props.allSupplies.map(supply => {
+    const types = allSupplies
+      .filter(each => each.name === supply.name)
+      .flatMap(each => each.types)
+      .map(each => each.id);
+    const selectedAll = hasSubArray(props.supplies, types);
+
+    return (
+      <div key={supply.name}>
+        <Title>
+          {supply.name}
+          <span
+            onClick={() => props.handleSelectAll(supply.name)}
+            className="select"
           >
-            {type.name}
-          </Tag>
-        ))}
-      </TagContainer>
-    </div>
-  ));
+            {selectedAll ? "取消全选" : "全选"}
+          </span>
+        </Title>
+        <TagContainer>
+          {supply.types.map(type => (
+            <Tag
+              key={type.id}
+              selected={props.supplies.includes(type.id)}
+              onChange={selected => props.handleSelect(type.id, selected)}
+            >
+              {type.name}
+            </Tag>
+          ))}
+        </TagContainer>
+      </div>
+    );
+  });
 
   return content;
 }
@@ -123,6 +145,15 @@ const CustomChildren = props => (
     </div>
   </div>
 );
+
+// TODO: move it to utils
+function hasSubArray(master, sub) {
+  let has = true;
+  sub.forEach(element => {
+    if (!master.includes(element)) has = false;
+  });
+  return has;
+}
 
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
@@ -180,6 +211,30 @@ class Search extends React.Component {
     this.setState({ supplies });
   };
 
+  handleSelectAll = name => {
+    let types = allSupplies
+      .filter(each => each.name === name)
+      .flatMap(each => each.types)
+      .map(each => each.id);
+    if (hasSubArray(this.state.supplies, types)) {
+      // 已全部选中,取消全选
+      this.setState(prevState => {
+        return {
+          supplies: prevState.supplies.filter(each => !types.includes(each))
+        };
+      });
+    } else {
+      // 未全部选中,全选
+      this.setState(prevState => {
+        types = types.filter(each => !prevState.supplies.includes(each));
+        types = prevState.supplies.concat(types);
+        return {
+          supplies: types
+        };
+      });
+    }
+  };
+
   handleSubmit = () => {
     const { supplies, cityCode } = this.state;
     this.props.submit({
@@ -194,8 +249,8 @@ class Search extends React.Component {
   };
 
   render() {
-    const { cityCode, antdDistrict } = this.state;
-    const { handleSelect } = this;
+    const { cityCode, antdDistrict, supplies } = this.state;
+    const { handleSelect, handleSelectAll } = this;
     return (
       <Container>
         <MainContent>
@@ -210,7 +265,9 @@ class Search extends React.Component {
               <CustomChildren>请选择捐赠地区</CustomChildren>
             </Picker>
           </List>
-          <Supply {...{ supplies, handleSelect }} />
+          <Supply
+            {...{ allSupplies, handleSelect, handleSelectAll, supplies }}
+          />
         </MainContent>
         <AffixBottom>
           <Flex>
