@@ -146,7 +146,7 @@ class Search extends React.Component {
             placeholder="输入捐赠城市"
             maxLength={8}
           />
-          {Supply({ supplies, handleSelect })}
+          <Supply {...{ supplies, handleSelect }} />
         </MainContent>
         <AffixBottom>
           <Flex>
