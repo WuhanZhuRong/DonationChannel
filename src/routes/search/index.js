@@ -201,7 +201,6 @@ class Search extends React.Component {
               data={antdDistrict}
               value={cityCode}
               onChange={v => this.handleCityCodeChange(v)}
-              onDismiss={e => console.log("dismiss", e)}
               cols={2}
             >
               <CustomChildren>请选择捐赠地区</CustomChildren>
