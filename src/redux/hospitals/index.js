@@ -104,3 +104,7 @@ function rebaseHospitalData(remoteData) {
 export function selectAllHospital(hospitals) {
   return hospitals.ids.map(id => hospitals.byId[id]);
 }
+
+export function selectHospitalById(hospitals, id) {
+  return hospitals.byId[Number(id)] || {};
+}

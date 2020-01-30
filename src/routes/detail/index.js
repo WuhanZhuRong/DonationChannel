@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { WhiteSpace, Card, Icon, List, Modal } from "antd-mobile"
-import { hospitalActions } from "../../redux/hospitals";
+import { hospitalActions, selectHospitalById } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import "./style.css"
 import copy_img from '../../assets/copy.png';
@@ -17,10 +17,13 @@ class Detail extends React.Component {
     }
   }
 
+  componentDidMount() {
+  }
+
   render() {
 
-    console.log('detail id:', this.props.match.params.id);
-
+    const { hospital } = this.props;
+    console.log(hospital, hospital['医院名称']);
     return (
         <div>
           <Card className='detail-card' full>
@@ -28,7 +31,7 @@ class Detail extends React.Component {
                 title={
                   <div className='detail-card-header'>
                     <div className='detail-card-header-left'>
-                      <h3 className='detail-card-header-left-name'>华中科技大学同济医学院附属医院</h3>
+                      <h3 className='detail-card-header-left-name'>{hospital['医院名称']}</h3>
                       <WhiteSpace />
                       <span className='detail-card-header-left-address'>地址： 湖北省武汉市xxxxxx</span>
                     </div>
@@ -77,8 +80,8 @@ class Detail extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {};
+function mapStateToProps(state, props) {
+  return {hospital: selectHospitalById(state.hospitals, props.match.params.id)};
 }
 
 function mapDispatchToProps(dispatch) {
