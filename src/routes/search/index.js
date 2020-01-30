@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { List, Button, Tag, Flex, Picker } from "antd-mobile";
+import { List, Button, Tag, Flex, Picker, NavBar, Icon } from "antd-mobile";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
-
 import { setDemandsFilter } from "../../redux/demand/index";
 
 const districtData = require("../../assets/location.json");
@@ -198,6 +197,15 @@ class Search extends React.Component {
     const { handleSelect } = this;
     return (
       <Container>
+        <NavBar
+          icon={<Icon type="left" />}
+          onLeftClick={() => {
+            this.props.history.push("/");
+          }}
+          mode="dark"
+        >
+          我要捐助
+        </NavBar>
         <MainContent>
           <List style={{ backgroundColor: "white" }}>
             <Picker
@@ -216,11 +224,11 @@ class Search extends React.Component {
           <Flex>
             <Flex.Item>
               <Button type="primary" onClick={this.handleSubmit}>
-                搜索
+                匹配
               </Button>
             </Flex.Item>
             <Flex.Item>
-              <Button onClick={this.handleSubmit}>查看全部资源</Button>
+              <Button onClick={this.handleSubmit}>查看全部需求</Button>
             </Flex.Item>
           </Flex>
         </AffixBottom>
