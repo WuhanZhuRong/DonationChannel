@@ -1,6 +1,7 @@
 .detail-card-header {
     padding: 0 40px;
     height: 120px;
+    width: 100%;
 }
 .detail-card-header-left {
     float: left;
