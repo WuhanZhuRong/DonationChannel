@@ -4,6 +4,8 @@ import { WhiteSpace, Card, Icon, List } from "antd-mobile"
 import { hospitalActions } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import "./style.css"
+import copy_img from '../../assets/copy.png';
+import phone_img from '../../assets/phone.png';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Detail extends React.Component {
@@ -24,8 +26,8 @@ class Detail extends React.Component {
                       <span className='detail-card-header-left-address'>地址： 湖北省武汉市xxxxxx</span>
                     </div>
                     <div className='detail-card-header-right'>
-                      <span className='detail-card-header-right-phone'><Icon type='loading' /></span>
-                      <span className='detail-card-header-right-copy'><Icon type='loading' /></span>
+                      <span className='detail-card-header-right-phone'><img src={phone_img} alt='电话' /></span>
+                      <span className='detail-card-header-right-copy'><img src={copy_img} alt='复制' /></span>
                     </div>
                   </div>
                 }
@@ -38,7 +40,7 @@ class Detail extends React.Component {
                       <List className='detail-card-body-category-list'>
                         {[1, 2, 3].map(i => (
                             <List.Item key={i} className='detail-card-body-category-list-item' extra={
-                              '不限'
+                              <span className='detail-card-body-category-list-item-count'>不限</span>
                             }>
                               n95防护口罩
                             </List.Item>
