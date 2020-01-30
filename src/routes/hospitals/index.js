@@ -4,6 +4,7 @@ import { Badge, WingBlank, WhiteSpace, Card, Icon, Flex, Grid, Accordion, List, 
 import './style.css'
 import { hospitalActions, selectAllHospital } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
+import { Link } from "react-router-dom";
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Hospitals extends React.Component {
@@ -67,10 +68,9 @@ class Hospitals extends React.Component {
                           </div>
                         </Flex.Item>
                         <Flex.Item>
-                          <div className='card-action-icon'>
-
+                          <Link className='card-action-icon' to={"/hospitals/"+hospital.id}>
                             <Icon size='md' type='ellipsis' />
-                          </div>
+                          </Link>
                         </Flex.Item>
                       </Flex>
                     } />
