@@ -1,0 +1,44 @@
+.detail-card-header {
+    padding: 0 40px;
+    height: 120px;
+}
+.detail-card-header-left {
+    float: left;
+    width: 70%;
+}
+.detail-card-header-left-address {
+    font-size: 12px;
+}
+.detail-card-header-right {
+    float: right;
+    width: 15%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.detail-card-header-right-phone,.detail-card-header-right-copy {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center;
+}
+.detail-card-header-right-phone,.detail-card-header-right-copy .am-icon {
+}
+
+.detail-card-body {
+    padding: 0 40px;
+}
+
+
+.detail-card-body-category-list{
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.detail-card-body-category-list-item {
+    padding-left: 20px;
+}
+
+.detail-card-body-category-list-item .am-list-content,.am-list-extra {
+    font-size: 13px !important;
+}
