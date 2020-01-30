@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { WhiteSpace, Card, Icon, List } from "antd-mobile"
+import { WhiteSpace, Card, Icon, List, Modal } from "antd-mobile"
 import { hospitalActions } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import "./style.css"
@@ -9,6 +9,13 @@ import phone_img from '../../assets/phone.png';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Detail extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showContactBox: false
+    }
+  }
 
   render() {
 
@@ -26,7 +33,7 @@ class Detail extends React.Component {
                       <span className='detail-card-header-left-address'>地址： 湖北省武汉市xxxxxx</span>
                     </div>
                     <div className='detail-card-header-right'>
-                      <span className='detail-card-header-right-phone'><img src={phone_img} alt='电话' /></span>
+                      <span className='detail-card-header-right-phone' onClick={() => this.setState({showContactBox: true})}><img src={phone_img} alt='电话' /></span>
                       <span className='detail-card-header-right-copy'><img src={copy_img} alt='复制' /></span>
                     </div>
                   </div>
@@ -52,6 +59,19 @@ class Detail extends React.Component {
 
             </Card.Body>
           </Card>
+          <Modal
+              visible={this.state.showContactBox}
+              transparent
+              maskClosable={false}
+              onClose={() => this.setState({showContactBox: false})}
+              title=""
+              footer={[{ text: '我知道了', onPress: () => this.setState({showContactBox: false}) }]}
+          >
+            <div>
+              186****4930<br />
+              001-87654321<br />
+            </div>
+          </Modal>
         </div>
     );
   }
