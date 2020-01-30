@@ -13,6 +13,7 @@
  }
 
 .card-action-icon {
+    display: block;
     width: 20%;
     margin: 0 auto;
 }
