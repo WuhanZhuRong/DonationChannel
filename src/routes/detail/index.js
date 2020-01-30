@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Badge, WingBlank, WhiteSpace, Card, Icon, Flex, Grid, Accordion, List, Checkbox } from "antd-mobile"
 import { hospitalActions } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 

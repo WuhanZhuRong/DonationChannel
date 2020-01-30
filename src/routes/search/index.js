@@ -150,7 +150,7 @@ class Search extends React.Component {
       itemLevel1.children = [];
       let data = districtData[index].cities;
       Object.keys(data).forEach(index => {
-        if (data[index].code == cityCode) {
+        if (data[index].code === cityCode) {
           cityCodeArr = [itemLevel1.code, cityCode];
         }
         let itemLevel2 = {};
