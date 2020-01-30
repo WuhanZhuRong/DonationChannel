@@ -152,11 +152,11 @@ class Search extends React.Component {
           <Flex>
             <Flex.Item>
               <Button type="primary" onClick={this.handleSubmit}>
-                提交
+                搜索
               </Button>
             </Flex.Item>
             <Flex.Item>
-              <Button onClick={this.handleSubmit}>我是游客</Button>
+              <Button onClick={this.handleSubmit}>查看全部资源</Button>
             </Flex.Item>
           </Flex>
         </AffixBottom>
