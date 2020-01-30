@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 @connect(mapStateToProps, mapDispatchToProps)
 class Hospitals extends React.Component {
   componentDidMount() {
-    this.props.searchHospital();
+    this.props.searchHospital(this.props.filter);
   }
 
   render() {
@@ -76,33 +76,33 @@ class Hospitals extends React.Component {
                 />
                 <Card.Body>
                   <Grid
-                    data={Object.keys(hospital)
-                      .filter(
-                        key =>
-                          ![
-                            "区县",
-                            "医院名称",
-                            "官方链接",
-                            "医院地址",
-                            "联系方式",
-                            "审核状态",
-                            "备注"
-                          ].includes(key)
-                      )
-                      .filter(key => hospital[key])}
-                    columnNum={2}
-                    square={false}
-                    hasLine={false}
-                    renderItem={key => (
-                      <div key={key} className="card-supplies">
-                        <div className="card-supplies-name">{key}</div>
-                        <WhiteSpace size="sm" />
-                        <div className="card-supplies-number">
-                          {hospital[key]}
-                        </div>
-                      </div>
-                    )}
-                  ></Grid>
+                      data={Object.keys(hospital)
+                          .filter(
+                              key =>
+                                  ![
+                                    "区县",
+                                    "医院名称",
+                                    "官方链接",
+                                    "医院地址",
+                                    "联系方式",
+                                    "审核状态",
+                                    "备注"
+                                  ].includes(key)
+                          )
+                          .filter(key => hospital[key])}
+                      columnNum={2}
+                      square={false}
+                      hasLine={false}
+                      renderItem={key => (
+                          <div key={key} className="card-supplies">
+                            <div className="card-supplies-name">{key}</div>
+                            <WhiteSpace size="sm" />
+                            <div className="card-supplies-number">
+                              {hospital[key]}
+                            </div>
+                          </div>
+                      )}
+                  />
                 </Card.Body>
                 <Card.Footer
                   content={

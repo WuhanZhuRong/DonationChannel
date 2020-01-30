@@ -1,7 +1,7 @@
 // action
 export const hospitalActions = {
-  searchHospital(cityCode, supplies) {
-    console.log('===发起请求===',cityCode, supplies);
+  searchHospital(filter) {
+    console.log('===发起请求===',filter.cityCode, filter.supplies);
     return{
       type: 'FETCH_HOSPITALS_SUCCESS',
       data: [{
