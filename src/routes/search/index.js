@@ -193,7 +193,6 @@ class Search extends React.Component {
 
   render() {
     const { cityCode, antdDistrict } = this.state;
-    console.log(cityCode);
     const { handleSelect } = this;
     return (
       <Container>
