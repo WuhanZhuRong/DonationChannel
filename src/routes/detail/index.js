@@ -16,7 +16,10 @@ class Detail extends React.Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    this.props.getHospitalDetail(id);
+  }
 
   render() {
     const { hospital } = this.props;
@@ -41,7 +44,7 @@ class Detail extends React.Component {
                   </h3>
                   <WhiteSpace />
                   <span className="detail-card-header-left-address">
-                    地址： 湖北省武汉市xxxxxx
+                    地址： {hospital.address}
                   </span>
                 </div>
                 <div className="detail-card-header-right">
@@ -94,12 +97,7 @@ class Detail extends React.Component {
             }
           ]}
         >
-          <div>
-            186****4930
-            <br />
-            001-87654321
-            <br />
-          </div>
+          <div>{hospital.phone}</div>
         </Modal>
       </div>
     );
@@ -108,7 +106,7 @@ class Detail extends React.Component {
 
 function mapStateToProps(state, props) {
   return {
-    hospital: selectHospitalById(state.hospitals, props.match.params.id)
+    hospital: state.hospitals.detail
   };
 }
 
