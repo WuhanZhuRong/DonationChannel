@@ -2,7 +2,7 @@ import { get, API_GET_HOSPITALS } from "../../utils/api";
 // action
 export const hospitalActions = {
   searchHospital(filter) {
-    console.log('===发起请求===',filter.cityCode, filter.supplies);
+    console.log('===searchHospital,发起请求===', filter.cityCode, filter.supplies);
     return dispatch =>
         // get(API_GET_HOSPITALS ,{city: filter.cityCode, page: 1, size: 99})
         get(API_GET_HOSPITALS ,{city: '武汉', page: 1, size: 7})
@@ -49,6 +49,3 @@ export function selectAllHospital(hospitals) {
   return hospitals.ids.map(id => hospitals.byId[id]);
 }
 
-export function selectHospitalById(hospitals, id) {
-  return hospitals.byId[Number(id)] || {};
-}

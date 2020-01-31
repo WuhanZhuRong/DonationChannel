@@ -1,25 +1,35 @@
 import React from "react";
-import { connect } from "react-redux";
 import { WhiteSpace, Card, Icon, List, Modal, NavBar } from "antd-mobile";
-import { hospitalActions, selectHospitalById } from "../../redux/hospitals";
-import { bindActionCreators } from "redux";
 import "./style.css";
 import copy_img from "../../assets/copy.png";
 import phone_img from "../../assets/phone.png";
+import { API_GET_HOSPITAL_BY_ID, get } from "../../utils/api";
 
-@connect(mapStateToProps, mapDispatchToProps)
 class Detail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showContactBox: false
+      showContactBox: false,
+      hospital: {}
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.fetchHospitalById(this.props.match.params.id);
+  }
+
+  fetchHospitalById(id) {
+    console.log('===fetchHospitalById,发起请求===', id);
+    get(API_GET_HOSPITAL_BY_ID(id)).then(res => this.setState({hospital: res.data.data[0]}));
+  }
 
   render() {
-    const { hospital } = this.props;
+    const { hospital } = this.state;
+    if(!hospital || !Object.keys(hospital).length) {
+      return ''
+    }
+    const supplyWithCategories = divideSuppliesIntoCategories(hospital.supplies);
+
     return (
       <div>
         <NavBar
@@ -37,11 +47,11 @@ class Detail extends React.Component {
               <div className="detail-card-header">
                 <div className="detail-card-header-left">
                   <h3 className="detail-card-header-left-name">
-                    {hospital["医院名称"]}
+                    {hospital.name}
                   </h3>
                   <WhiteSpace />
                   <span className="detail-card-header-left-address">
-                    地址： 湖北省武汉市xxxxxx
+                    地址： {hospital.address}
                   </span>
                 </div>
                 <div className="detail-card-header-right">
@@ -59,25 +69,25 @@ class Detail extends React.Component {
             }
           />
           <Card.Body className="detail-card-body">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="detail-card-body-category">
-                <h4 className="detail-card-body-category-name">口罩</h4>
-                <List className="detail-card-body-category-list">
-                  {[1, 2, 3].map(i => (
-                    <List.Item
-                      key={i}
-                      className="detail-card-body-category-list-item"
-                      extra={
-                        <span className="detail-card-body-category-list-item-count">
-                          不限
+            {supplyWithCategories.filter(category => category.supplies.length).map(category => (
+                <div key={category.name} className="detail-card-body-category">
+                  <h4 className="detail-card-body-category-name">{category.name}</h4>
+                  <List className="detail-card-body-category-list">
+                    {category.supplies.map(supply => (
+                        <List.Item
+                            key={supply.name}
+                            className="detail-card-body-category-list-item"
+                            extra={
+                              <span className="detail-card-body-category-list-item-count">
+                          {supply.count || '不限'}
                         </span>
-                      }
-                    >
-                      n95防护口罩
-                    </List.Item>
-                  ))}
-                </List>
-              </div>
+                            }
+                        >
+                          {supply.name}
+                        </List.Item>
+                    ))}
+                  </List>
+                </div>
             ))}
           </Card.Body>
         </Card>
@@ -106,16 +116,27 @@ class Detail extends React.Component {
   }
 }
 
-function mapStateToProps(state, props) {
-  return {
-    hospital: selectHospitalById(state.hospitals, props.match.params.id)
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    ...bindActionCreators(hospitalActions, dispatch)
-  };
+function divideSuppliesIntoCategories(supplies) {
+  const masks = [];
+  const armors = [];
+  const equipments = [];
+  const others = [];
+  supplies.split('、').forEach(str => {
+    const supply = {name: str};
+    if(str.includes('口罩')){
+      masks.push(supply);
+    }else if(str.includes('眼') || str.includes('帽') || str.includes('面') || str.includes('衣') || str.includes('服')  ) {
+      armors.push(supply);
+    }else if(str.includes('设备')){
+      equipments.push(supply)
+    }else {
+      others.push(supply);
+    }
+  });
+  return [{name: '口罩', supplies: masks},
+    {name: '防护', supplies: armors},
+    {name: '医用设备', supplies: equipments},
+    {name: '其他', supplies: others}];
 }
 
 export default Detail;
