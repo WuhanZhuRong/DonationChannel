@@ -12,7 +12,8 @@ import {
   List,
   Checkbox,
   NavBar,
-  Toast
+  Toast,
+  ListView
 } from "antd-mobile";
 import "./style.css";
 import { hospitalActions, selectAllHospital } from "../../redux/hospitals";
@@ -20,14 +21,44 @@ import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import copy from "copy-to-clipboard";
 
-let page = 1;
+let page;
 const size = 10;
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Hospitals extends React.Component {
-  componentDidMount() {
-    this.props.searchHospital(this.props.filter, page, size);
+
+  constructor(props) {
+    super(props);
+    const dataSource = new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1 !== row2,
+    });
+    this.state = {
+      dataSource,
+      isLoading: false
+    }
   }
+
+  componentDidMount() {
+    page = 1;
+    this.props.searchHospital(this.props.filter, page++, size);
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if(nextProps.hospitals !== this.props.hospitals) {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(nextProps.hospitals),
+        isLoading: false
+      });
+    }
+  }
+
+  onEndReached = (event) => {
+    if (this.state.isLoading) {
+      return;
+    }
+    this.setState({ isLoading: true });
+    this.props.searchHospitalInAdditional(this.props.filter, page++, size);
+  };
 
   copyToClickBoard = (res, type) => {
     if (copy(res)) {
@@ -37,8 +68,88 @@ class Hospitals extends React.Component {
     }
   };
 
+
   render() {
     const { hospitals, filter, supplies } = this.props;
+
+    const row = (rowData, sectionID, rowID) => {
+      const hospital = hospitals[rowID];
+      return (
+          <WingBlank size="md" key={rowID}>
+              <Card className="hospital-card" key={hospital.id} full>
+                <Card.Header
+                    title={
+                      <span
+                          style={{
+                            fontSize: "16px",
+                            textAlign: "center",
+                            width: "100%"
+                          }}
+                      >
+                      {hospital.name}
+                    </span>
+                    }
+                    extra={<Badge text={hospital.province} />}
+                />
+                <Card.Body>
+                  {hospital.supplies && (
+                      <Grid
+                          data={hospital.supplies.split("、") || []}
+                          columnNum={2}
+                          square={false}
+                          hasLine={false}
+                          renderItem={supply => (
+                              <div
+                                  key={supply ? supply.name : ""}
+                                  className="card-supplies"
+                              >
+                                <div className="card-supplies-name">{supply}</div>
+                                <WhiteSpace size="sm" />
+                                <div className="card-supplies-number">{"不限量"}</div>
+                              </div>
+                          )}
+                      />
+                  )}
+                </Card.Body>
+                <Card.Footer
+                    content={
+                      <Flex justify="end">
+                        <Flex.Item>
+                          <div
+                              className="card-action-icon"
+                              onClick={() =>
+                                  this.copyToClickBoard(hospital.phone, "联系方式")
+                              }
+                          >
+                            <i className="ai-phone" />
+                          </div>
+                        </Flex.Item>
+                        <Flex.Item>
+                          <div
+                              className="card-action-icon"
+                              onClick={() =>
+                                  this.copyToClickBoard(hospital.address, "医院地址")
+                              }
+                          >
+                            <i className="ai-home" />
+                          </div>
+                        </Flex.Item>
+                        <Flex.Item>
+                          <Link
+                              className="card-action-icon"
+                              to={"/hospitals/" + hospital.id}
+                          >
+                            <Icon size="md" type="ellipsis" />
+                          </Link>
+                        </Flex.Item>
+                      </Flex>
+                    }
+                />
+              </Card>
+          </WingBlank>
+      );
+    };
+
     return (
       <div>
         <NavBar
@@ -68,84 +179,23 @@ class Hospitals extends React.Component {
           </Accordion>
         </div>
         <WhiteSpace />
-        <div>
-          <WingBlank size="md">
-            {hospitals.map(hospital => (
-              <Card className="hospital-card" key={hospital.id} full>
-                <Card.Header
-                  title={
-                    <span
-                      style={{
-                        fontSize: "16px",
-                        textAlign: "center",
-                        width: "100%"
-                      }}
-                    >
-                      {hospital.name}
-                    </span>
-                  }
-                  extra={<Badge text={hospital.province} />}
-                />
-                <Card.Body>
-                  {hospital.supplies && (
-                    <Grid
-                      data={hospital.supplies.split("、") || []}
-                      columnNum={2}
-                      square={false}
-                      hasLine={false}
-                      renderItem={supply => (
-                        <div
-                          key={supply ? supply.name : ""}
-                          className="card-supplies"
-                        >
-                          <div className="card-supplies-name">{supply}</div>
-                          <WhiteSpace size="sm" />
-                          <div className="card-supplies-number">{"不限量"}</div>
-                        </div>
-                      )}
-                    />
-                  )}
-                </Card.Body>
-                <Card.Footer
-                  content={
-                    <Flex justify="end">
-                      <Flex.Item>
-                        <div
-                          className="card-action-icon"
-                          onClick={() =>
-                            this.copyToClickBoard(hospital.phone, "联系方式")
-                          }
-                        >
-                          <i className="ai-phone" />
-                        </div>
-                      </Flex.Item>
-                      <Flex.Item>
-                        <div
-                          className="card-action-icon"
-                          onClick={() =>
-                            this.copyToClickBoard(hospital.address, "医院地址")
-                          }
-                        >
-                          <i className="ai-home" />
-                        </div>
-                      </Flex.Item>
-                      <Flex.Item>
-                        <Link
-                          className="card-action-icon"
-                          to={"/hospitals/" + hospital.id}
-                        >
-                          <Icon size="md" type="ellipsis" />
-                        </Link>
-                      </Flex.Item>
-                    </Flex>
-                  }
-                />
-              </Card>
-            ))}
-          </WingBlank>
-        </div>
+        <ListView
+            dataSource={this.state.dataSource}
+            renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
+              {this.state.isLoading ? 'Loading...' : 'Loaded'}
+            </div>)}
+            renderRow={row}
+            className="list_view"
+            pageSize={size}
+            useBodyScroll
+            onScroll={() => { console.log('scroll'); }}
+            scrollRenderAheadDistance={500}
+            onEndReached={this.onEndReached}
+            onEndReachedThreshold={10}
+        />
       </div>
     );
+
   }
 }
 
