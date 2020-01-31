@@ -1,11 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import { WhiteSpace, Card, Icon, List, Modal, NavBar } from "antd-mobile";
-import { hospitalActions, selectHospitalById } from "../../redux/hospitals";
+import {
+  WhiteSpace,
+  Card,
+  Icon,
+  List,
+  Modal,
+  NavBar,
+  Toast
+} from "antd-mobile";
+import { hospitalActions } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import "./style.css";
 import copy_img from "../../assets/copy.png";
 import phone_img from "../../assets/phone.png";
+import copy from "copy-to-clipboard";
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Detail extends React.Component {
@@ -20,6 +29,14 @@ class Detail extends React.Component {
     const id = this.props.match.params.id;
     this.props.getHospitalDetail(id);
   }
+
+  copyToClickBoard = (res, type) => {
+    if (copy(res)) {
+      Toast.success(`${type}已复制到粘贴板`);
+    } else {
+      Toast.fail("复制失败");
+    }
+  };
 
   render() {
     const { hospital } = this.props;
@@ -55,7 +72,13 @@ class Detail extends React.Component {
                     <img src={phone_img} alt="电话" />
                   </span>
                   <span className="detail-card-header-right-copy">
-                    <img src={copy_img} alt="复制" />
+                    <img
+                      src={copy_img}
+                      onClick={() =>
+                        this.copyToClickBoard(hospital.address, "医院地址")
+                      }
+                      alt="复制"
+                    />
                   </span>
                 </div>
               </div>
@@ -88,7 +111,8 @@ class Detail extends React.Component {
           visible={this.state.showContactBox}
           transparent
           maskClosable={false}
-          onClose={() => this.setState({ showContactBox: false })}
+          onClose={() => this.handleCloseModal()}
+          afterClose={() => this.copyToClickBoard(hospital.phone, "联系方式")}
           title=""
           footer={[
             {
