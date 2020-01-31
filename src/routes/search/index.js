@@ -200,9 +200,12 @@ class Search extends React.Component {
 
   handleSubmit = () => {
     const { supplies, cityCode } = this.state;
+    const cityName =
+      cityCode.length >= 2 && districtData[cityCode[0]]["cities"][cityCode[1]];
     this.props.setDemandsFilter({
       supplies,
-      cityCode: cityCode.length >= 2 && cityCode[1]
+      cityCode: cityCode.length >= 2 && cityCode[1],
+      cityName
     });
     this.props.history.push("/hospitals");
   };

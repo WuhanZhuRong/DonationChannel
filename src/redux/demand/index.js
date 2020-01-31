@@ -4,7 +4,8 @@ import { get, API_GET_SUPPLIES } from "../../utils/api";
 const initialState = {
   filter: {
     cityCode: "",
-    supplies: []
+    supplies: [],
+    cityName: ""
   },
   allSupplies: [],
   flatSupplies: []
