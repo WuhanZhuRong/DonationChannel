@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { List, Button, Tag, Flex, Picker, NavBar, Icon } from "antd-mobile";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
-import { setDemandsFilter } from "../../redux/demand/index";
+import { bindActionCreators } from "redux";
+import { demandActions } from "../../redux/demand/index";
 
 const districtData = require("../../assets/location.json");
 
@@ -44,47 +45,9 @@ const MainContent = styled.div`
   flex: 1 0 auto;
 `;
 
-const allSupplies = [
-  {
-    name: "口罩",
-    types: [
-      {
-        name: "医用外科口罩",
-        id: 1
-      },
-      {
-        name: "n95口罩",
-        id: 2
-      },
-      {
-        name: "一次性医用口罩",
-        id: 3
-      }
-    ]
-  },
-  {
-    name: "面屏眼罩",
-    types: [
-      { name: "防护面罩", id: 4 },
-      { name: "防冲击眼罩", id: 5 },
-      { name: "防护目镜", id: 6 },
-      { name: "防护眼镜", id: 7 },
-      { name: "一次性医用帽子", id: 8 }
-    ]
-  },
-  {
-    name: "医疗设备",
-    types: [
-      { name: "测体温设备", id: 9 },
-      { name: "空气消毒设备", id: 10 },
-      { name: "医用紫外线消毒车", id: 11 }
-    ]
-  }
-];
-
 function Supply(props) {
   const content = props.allSupplies.map(supply => {
-    const types = allSupplies
+    const types = props.allSupplies
       .filter(each => each.name === supply.name)
       .flatMap(each => each.types)
       .map(each => each.id);
@@ -164,6 +127,7 @@ class Search extends React.Component {
   };
 
   componentDidMount() {
+    this.props.fetchSupplies();
     const {
       filter: { supplies, cityCode }
     } = this.props;
@@ -211,7 +175,7 @@ class Search extends React.Component {
   };
 
   handleSelectAll = name => {
-    let types = allSupplies
+    let types = this.props.allSupplies
       .filter(each => each.name === name)
       .flatMap(each => each.types)
       .map(each => each.id);
@@ -236,7 +200,7 @@ class Search extends React.Component {
 
   handleSubmit = () => {
     const { supplies, cityCode } = this.state;
-    this.props.submit({
+    this.props.setDemandsFilter({
       supplies,
       cityCode: cityCode.length >= 2 && cityCode[1]
     });
@@ -248,6 +212,7 @@ class Search extends React.Component {
   };
 
   render() {
+    const { allSupplies } = this.props;
     const { cityCode, antdDistrict, supplies } = this.state;
     const { handleSelect, handleSelectAll } = this;
     return (
@@ -295,14 +260,12 @@ class Search extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { filter: state.demand.filter };
+  return { filter: state.demand.filter, allSupplies: state.demand.allSupplies };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    submit: filter => {
-      dispatch(setDemandsFilter(filter));
-    }
+    ...bindActionCreators(demandActions, dispatch)
   };
 }
 

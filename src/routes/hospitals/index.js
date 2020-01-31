@@ -74,23 +74,24 @@ class Hospitals extends React.Component {
                   extra={<Badge text={hospital.province} />}
                 />
                 <Card.Body>
-                  {hospital.supplies &&
-                  <Grid
-                      data={hospital.supplies.split('、') || []}
+                  {hospital.supplies && (
+                    <Grid
+                      data={hospital.supplies.split("、") || []}
                       columnNum={2}
                       square={false}
                       hasLine={false}
                       renderItem={supply => (
-                          <div key={supply ? supply.name : ''} className="card-supplies">
-                            <div className="card-supplies-name">{supply}</div>
-                            <WhiteSpace size="sm" />
-                            <div className="card-supplies-number">
-                              {'不限量'}
-                            </div>
-                          </div>
+                        <div
+                          key={supply ? supply.name : ""}
+                          className="card-supplies"
+                        >
+                          <div className="card-supplies-name">{supply}</div>
+                          <WhiteSpace size="sm" />
+                          <div className="card-supplies-number">{"不限量"}</div>
+                        </div>
                       )}
-                  />
-                  }
+                    />
+                  )}
                 </Card.Body>
                 <Card.Footer
                   content={
@@ -124,7 +125,7 @@ function mapStateToProps(state) {
   return {
     hospitals: selectAllHospital(state.hospitals),
     filter: state.demand.filter,
-    supplies: state.demand.text
+    supplies: state.demand.flatSupplies
   };
 }
 
