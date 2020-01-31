@@ -12,4 +12,7 @@ const basic = 'http://czr.vipdesk.cn:8080/zhurong/';
 // const basic = 'http://localhost:8181/zhurong/';
 
 export const API_GET_HOSPITALS = `${basic}hospitals`;
+
 export const API_GET_HOSPITAL_BY_ID = id => `${basic}hospitals/${id}`;
+
+export const API_GET_SUPPLIES = `${basic}supplies`;

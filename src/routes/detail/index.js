@@ -1,9 +1,10 @@
 import React from "react";
-import { WhiteSpace, Card, Icon, List, Modal, NavBar } from "antd-mobile";
+import { WhiteSpace, Card, Icon, List, Modal, NavBar, Toast } from "antd-mobile";
 import "./style.css";
+import { API_GET_HOSPITAL_BY_ID, get } from "../../utils/api";
 import copy_img from "../../assets/copy.png";
 import phone_img from "../../assets/phone.png";
-import { API_GET_HOSPITAL_BY_ID, get } from "../../utils/api";
+import copy from "copy-to-clipboard";
 
 class Detail extends React.Component {
   constructor(props) {
@@ -22,6 +23,14 @@ class Detail extends React.Component {
     console.log('===fetchHospitalById,发起请求===', id);
     get(API_GET_HOSPITAL_BY_ID(id)).then(res => this.setState({hospital: res.data.data[0]}));
   }
+
+  copyToClickBoard = (res, type) => {
+    if (copy(res)) {
+      Toast.success(`${type}已复制到粘贴板`);
+    } else {
+      Toast.fail("复制失败");
+    }
+  };
 
   render() {
     const { hospital } = this.state;
@@ -62,7 +71,13 @@ class Detail extends React.Component {
                     <img src={phone_img} alt="电话" />
                   </span>
                   <span className="detail-card-header-right-copy">
-                    <img src={copy_img} alt="复制" />
+                    <img
+                      src={copy_img}
+                      onClick={() =>
+                        this.copyToClickBoard(hospital.address, "医院地址")
+                      }
+                      alt="复制"
+                    />
                   </span>
                 </div>
               </div>
@@ -96,6 +111,7 @@ class Detail extends React.Component {
           transparent
           maskClosable={false}
           onClose={() => this.setState({ showContactBox: false })}
+          afterClose={() => this.copyToClickBoard(hospital.phone, "联系方式")}
           title=""
           footer={[
             {
@@ -104,12 +120,7 @@ class Detail extends React.Component {
             }
           ]}
         >
-          <div>
-            186****4930
-            <br />
-            001-87654321
-            <br />
-          </div>
+          <div>{hospital.phone}</div>
         </Modal>
       </div>
     );
@@ -117,6 +128,7 @@ class Detail extends React.Component {
 }
 
 function divideSuppliesIntoCategories(supplies) {
+  // TODO logic need to be complete or wait back-end return new structure
   const masks = [];
   const armors = [];
   const equipments = [];

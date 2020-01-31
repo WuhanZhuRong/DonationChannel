@@ -1931,6 +1931,11 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
+ant-design-icons@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/ant-design-icons/-/ant-design-icons-1.3.3.tgz#88f50bee831cfc8ca04be5d8bf2fa737fb59d300"
+  integrity sha512-Z0v5n1KBgosWwZNrb03GQJIITx+LYFF99j1iHpLX5fX2tDsP2xXpyE7DXWGac3UIxljwBnEm8UU0fL56KlmXLA==
+
 antd-mobile@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/antd-mobile/-/antd-mobile-2.3.1.tgz#04d8709c198eee27c3c41b903cb2ad77a16028e3"
@@ -3138,6 +3143,13 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
+
+copy-to-clipboard@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/copy-to-clipboard/-/copy-to-clipboard-3.2.0.tgz#d2724a3ccbfed89706fac8a894872c979ac74467"
+  integrity sha512-eOZERzvCmxS8HWzugj4Uxl8OJxa7T2k1Gi0X5qavwydHIfuSHq2dTD09LOg/XyGq4Zpb5IsR/2OJ5lbOegz78w==
+  dependencies:
+    toggle-selection "^1.0.6"
 
 core-js-compat@^3.1.1, core-js-compat@^3.6.2:
   version "3.6.4"
@@ -10435,6 +10447,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
+
+toggle-selection@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/toggle-selection/-/toggle-selection-1.0.6.tgz#6e45b1263f2017fa0acc7d89d78b15b8bf77da32"
+  integrity sha1-bkWxJj8gF/oKzH2J14sVuL932jI=
 
 toidentifier@1.0.0:
   version "1.0.0"

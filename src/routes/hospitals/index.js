@@ -11,18 +11,28 @@ import {
   Accordion,
   List,
   Checkbox,
-  NavBar
+  NavBar,
+  Toast
 } from "antd-mobile";
 import "./style.css";
 import { hospitalActions, selectAllHospital } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
+import copy from "copy-to-clipboard";
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Hospitals extends React.Component {
   componentDidMount() {
     this.props.searchHospital(this.props.filter);
   }
+
+  copyToClickBoard = (res, type) => {
+    if (copy(res)) {
+      Toast.success(`${type}已复制到粘贴板`);
+    } else {
+      Toast.fail("复制失败");
+    }
+  };
 
   render() {
     const { hospitals, filter, supplies } = this.props;
@@ -74,30 +84,46 @@ class Hospitals extends React.Component {
                   extra={<Badge text={hospital.province} />}
                 />
                 <Card.Body>
-                  {hospital.supplies &&
-                  <Grid
-                      data={hospital.supplies.split('、') || []}
+                  {hospital.supplies && (
+                    <Grid
+                      data={hospital.supplies.split("、") || []}
                       columnNum={2}
                       square={false}
                       hasLine={false}
                       renderItem={supply => (
-                          <div key={supply ? supply.name : ''} className="card-supplies">
-                            <div className="card-supplies-name">{supply}</div>
-                            <WhiteSpace size="sm" />
-                            <div className="card-supplies-number">
-                              {'不限量'}
-                            </div>
-                          </div>
+                        <div
+                          key={supply ? supply.name : ""}
+                          className="card-supplies"
+                        >
+                          <div className="card-supplies-name">{supply}</div>
+                          <WhiteSpace size="sm" />
+                          <div className="card-supplies-number">{"不限量"}</div>
+                        </div>
                       )}
-                  />
-                  }
+                    />
+                  )}
                 </Card.Body>
                 <Card.Footer
                   content={
                     <Flex justify="end">
                       <Flex.Item>
-                        <div className="card-action-icon">
-                          <Icon size="md" type="check-circle-o" />
+                        <div
+                          className="card-action-icon"
+                          onClick={() =>
+                            this.copyToClickBoard(hospital.phone, "联系方式")
+                          }
+                        >
+                          <i className="ai-phone" />
+                        </div>
+                      </Flex.Item>
+                      <Flex.Item>
+                        <div
+                          className="card-action-icon"
+                          onClick={() =>
+                            this.copyToClickBoard(hospital.address, "医院地址")
+                          }
+                        >
+                          <i className="ai-home" />
                         </div>
                       </Flex.Item>
                       <Flex.Item>
@@ -124,7 +150,7 @@ function mapStateToProps(state) {
   return {
     hospitals: selectAllHospital(state.hospitals),
     filter: state.demand.filter,
-    supplies: state.demand.text
+    supplies: state.demand.flatSupplies
   };
 }
 
