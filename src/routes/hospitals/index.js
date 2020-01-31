@@ -34,6 +34,7 @@ class Hospitals extends React.Component {
     });
     this.state = {
       dataSource,
+      hospitals: [],
       isLoading: false
     }
   }
@@ -43,13 +44,15 @@ class Hospitals extends React.Component {
     this.props.searchHospital(this.props.filter, page++, size);
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    if(nextProps.hospitals !== this.props.hospitals) {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(nextProps.hospitals),
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if(prevState.hospitals !== nextProps.hospitals) {
+      return {
+        dataSource: prevState.dataSource.cloneWithRows(nextProps.hospitals),
+        hospitals: nextProps.hospitals,
         isLoading: false
-      });
+      }
     }
+    return null;
   }
 
   onEndReached = (event) => {
