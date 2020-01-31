@@ -4,11 +4,10 @@ export const hospitalActions = {
   searchHospital(filter) {
     console.log("===发起请求===", filter.cityCode, filter.supplies);
     return dispatch =>
-      // get(API_GET_HOSPITALS ,{city: filter.cityCode, page: 1, size: 99})
       get(API_GET_HOSPITALS, {
-        city: filter.cityName,
+        city: "武汉" || filter.cityName,
         page: 1,
-        size: 7
+        size: 10
       }).then(res => dispatch(fetchHospitalsSuccess(res.data.data)));
   }
 };

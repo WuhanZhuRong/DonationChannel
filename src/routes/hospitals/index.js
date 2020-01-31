@@ -11,18 +11,28 @@ import {
   Accordion,
   List,
   Checkbox,
-  NavBar
+  NavBar,
+  Toast
 } from "antd-mobile";
 import "./style.css";
 import { hospitalActions, selectAllHospital } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
+import copy from "copy-to-clipboard";
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Hospitals extends React.Component {
   componentDidMount() {
     this.props.searchHospital(this.props.filter);
   }
+
+  copyToClickBoard = (res, type) => {
+    if (copy(res)) {
+      Toast.success(`${type}已复制到粘贴板`);
+    } else {
+      Toast.fail("复制失败");
+    }
+  };
 
   render() {
     const { hospitals, filter, supplies } = this.props;
@@ -97,8 +107,23 @@ class Hospitals extends React.Component {
                   content={
                     <Flex justify="end">
                       <Flex.Item>
-                        <div className="card-action-icon">
-                          <Icon size="md" type="check-circle-o" />
+                        <div
+                          className="card-action-icon"
+                          onClick={() =>
+                            this.copyToClickBoard(hospital.phone, "联系方式")
+                          }
+                        >
+                          <i class="ai-phone" />
+                        </div>
+                      </Flex.Item>
+                      <Flex.Item>
+                        <div
+                          className="card-action-icon"
+                          onClick={() =>
+                            this.copyToClickBoard(hospital.address, "医院地址")
+                          }
+                        >
+                          <i class="ai-home" />
                         </div>
                       </Flex.Item>
                       <Flex.Item>
