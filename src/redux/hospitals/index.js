@@ -1,13 +1,13 @@
 import { get, API_GET_HOSPITALS } from "../../utils/api";
 // action
 export const hospitalActions = {
-  searchHospital(filter) {
+  searchHospital(filter, page, size) {
     console.log('===searchHospital,发起请求===', filter.cityCode, filter.supplies);
     return dispatch =>
       get(API_GET_HOSPITALS, {
         city: "武汉" || filter.cityName,
-        page: 1,
-        size: 10
+        page,
+        size
       }).then(res => dispatch(fetchHospitalsSuccess(res.data.data)));
   }
 };

@@ -20,10 +20,13 @@ import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import copy from "copy-to-clipboard";
 
+let page = 1;
+const size = 10;
+
 @connect(mapStateToProps, mapDispatchToProps)
 class Hospitals extends React.Component {
   componentDidMount() {
-    this.props.searchHospital(this.props.filter);
+    this.props.searchHospital(this.props.filter, page, size);
   }
 
   copyToClickBoard = (res, type) => {
