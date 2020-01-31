@@ -58,7 +58,7 @@ class Hospitals extends React.Component {
         <div>
           <WingBlank size="md">
             {hospitals.map(hospital => (
-              <Card className="hospital-card" key={hospital["区县"]} full>
+              <Card className="hospital-card" key={hospital.id} full>
                 <Card.Header
                   title={
                     <span
@@ -68,41 +68,29 @@ class Hospitals extends React.Component {
                         width: "100%"
                       }}
                     >
-                      {hospital["医院名称"]}
+                      {hospital.name}
                     </span>
                   }
-                  // thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
-                  extra={<Badge text={hospital["区县"]} />}
+                  extra={<Badge text={hospital.province} />}
                 />
                 <Card.Body>
+                  {hospital.supplies &&
                   <Grid
-                      data={Object.keys(hospital)
-                          .filter(
-                              key =>
-                                  ![
-                                    "区县",
-                                    "医院名称",
-                                    "官方链接",
-                                    "医院地址",
-                                    "联系方式",
-                                    "审核状态",
-                                    "备注"
-                                  ].includes(key)
-                          )
-                          .filter(key => hospital[key])}
+                      data={hospital.supplies.split('、') || []}
                       columnNum={2}
                       square={false}
                       hasLine={false}
-                      renderItem={key => (
-                          <div key={key} className="card-supplies">
-                            <div className="card-supplies-name">{key}</div>
+                      renderItem={supply => (
+                          <div key={supply ? supply.name : ''} className="card-supplies">
+                            <div className="card-supplies-name">{supply}</div>
                             <WhiteSpace size="sm" />
                             <div className="card-supplies-number">
-                              {hospital[key]}
+                              {'不限量'}
                             </div>
                           </div>
                       )}
                   />
+                  }
                 </Card.Body>
                 <Card.Footer
                   content={
