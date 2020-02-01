@@ -1,0 +1,10 @@
+.pagination {
+  margin-top: 5px;
+  margin-bottom: 2px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.pagination .am-button {
+  height: 32px;
+  line-height: 32px;
+}
