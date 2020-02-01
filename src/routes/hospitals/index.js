@@ -6,13 +6,13 @@ import {
   Card,
   Icon,
   Flex,
-  Grid,
   Accordion,
   List,
   Checkbox,
   NavBar,
   Toast,
   ListView,
+  Grid,
   Button
 } from "antd-mobile";
 import "./style.css";
@@ -108,7 +108,13 @@ class Hospitals extends React.Component {
             }
           />
           <Card.Body>
-            <div>This is content of `Card`</div>
+            {hospital.supplies &&
+              (hospital.supplies.split("、") || []).map(supply => (
+                <div key={supply ? supply.name : ""} className="card-supplies">
+                  <div className="card-supplies-name">{supply}</div>
+                  <div className="card-supplies-number">{"不限量"}</div>
+                </div>
+              ))}
           </Card.Body>
           <Card.Footer
             content={
@@ -146,27 +152,6 @@ class Hospitals extends React.Component {
           />
         </Card>
         // <Card className="hospital-card" key={hospital.id} full>
-
-        //   <Card.Body>
-        //     {hospital.supplies && (
-        //       <Grid
-        //         data={hospital.supplies.split("、") || []}
-        //         columnNum={2}
-        //         square={false}
-        //         hasLine={false}
-        //         renderItem={supply => (
-        //           <div
-        //             key={supply ? supply.name : ""}
-        //             className="card-supplies"
-        //           >
-        //             <div className="card-supplies-name">{supply}</div>
-        //             <WhiteSpace size="sm" />
-        //             <div className="card-supplies-number">{"不限量"}</div>
-        //           </div>
-        //         )}
-        //       />
-        //     )}
-        //   </Card.Body>
 
         // </Card>
       );
