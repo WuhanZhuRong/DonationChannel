@@ -138,19 +138,19 @@ function divideSuppliesIntoCategories(supplies) {
   const armors = [];
   const equipments = [];
   const others = [];
-  supplies.split("、").forEach(str => {
-    const supply = { name: str };
-    if (str.includes("口罩")) {
+  supplies.forEach(supply => {
+    const { name } = supply;
+    if (name.includes("口罩")) {
       masks.push(supply);
     } else if (
-      str.includes("眼") ||
-      str.includes("帽") ||
-      str.includes("面") ||
-      str.includes("衣") ||
-      str.includes("服")
+        name.includes("眼") ||
+        name.includes("帽") ||
+        name.includes("面") ||
+        name.includes("衣") ||
+        name.includes("服")
     ) {
       armors.push(supply);
-    } else if (str.includes("设备")) {
+    } else if (name.includes("设备")) {
       equipments.push(supply);
     } else {
       others.push(supply);

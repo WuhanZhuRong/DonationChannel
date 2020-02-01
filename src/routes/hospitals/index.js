@@ -108,12 +108,12 @@ class Hospitals extends React.Component {
           />
           <Card.Body>
             {hospital.supplies &&
-              (hospital.supplies.split("、") || []).map(supply => (
-                <div key={supply ? supply.name : ""} className="card-supplies">
-                  <div className="card-supplies-name">{supply}</div>
-                  <div className="card-supplies-number">{"不限量"}</div>
+              (hospital.supplies.map(supply => (
+                <div key={supply.name} className="card-supplies">
+                  <div className="card-supplies-name">{supply.name}</div>
+                  <div className="card-supplies-number">{supply.amount <= 0 ? "不限量" : supply.amount}</div>
                 </div>
-              ))}
+              )))}
           </Card.Body>
           <Card.Footer
             content={
