@@ -58,11 +58,11 @@ class Detail extends React.Component {
               <div className="detail-card-header">
                 <div className="detail-card-header-left">
                   <h3 className="detail-card-header-left-name">
-                    {hospital.name}
+                    {hospital.hospital}
                   </h3>
 
                   <div className="detail-card-header-left-address">
-                    <p>地址： {hospital.address}</p>
+                    <p>地址： {hospital.street}</p>
                   </div>
                 </div>
                 <div className="detail-card-header-right">
@@ -76,7 +76,7 @@ class Detail extends React.Component {
                     <i
                       className="ai-home"
                       onClick={() =>
-                        this.copyToClickBoard(hospital.address, "医院地址")
+                        this.copyToClickBoard(hospital.street, "医院地址")
                       }
                     />
                   </span>
@@ -116,7 +116,7 @@ class Detail extends React.Component {
           transparent
           maskClosable={false}
           onClose={() => this.setState({ showContactBox: false })}
-          afterClose={() => this.copyToClickBoard(hospital.phone, "联系方式")}
+          afterClose={() => this.copyToClickBoard(hospital.mobile, "联系方式")}
           title=""
           footer={[
             {
@@ -125,7 +125,7 @@ class Detail extends React.Component {
             }
           ]}
         >
-          <div>{hospital.phone}</div>
+          <div>{hospital.mobile}</div>
         </Modal>
       </div>
     );

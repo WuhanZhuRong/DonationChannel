@@ -98,7 +98,7 @@ class Hospitals extends React.Component {
                     float: "left"
                   }}
                 >
-                  {hospital.name}
+                  {hospital.hospital}
                 </span>
                 <span style={{ float: "right" }}>
                   <Badge text={hospital.province} />
@@ -122,7 +122,7 @@ class Hospitals extends React.Component {
                   <div
                     className="card-action-icon"
                     onClick={() =>
-                      this.copyToClickBoard(hospital.phone, "联系方式")
+                      this.copyToClickBoard(hospital.mobile, "联系方式")
                     }
                   >
                     <i className="ai-phone" />
@@ -132,7 +132,7 @@ class Hospitals extends React.Component {
                   <div
                     className="card-action-icon"
                     onClick={() =>
-                      this.copyToClickBoard(hospital.address, "医院地址")
+                      this.copyToClickBoard(hospital.street, "医院地址")
                     }
                   >
                     <i className="ai-home" />
