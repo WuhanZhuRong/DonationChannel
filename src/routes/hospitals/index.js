@@ -35,7 +35,8 @@ class Hospitals extends React.Component {
     this.state = {
       dataSource,
       hospitals: [],
-      isLoading: false
+      isLoading: false,
+      hasNextPage: true
     }
   }
 
@@ -49,13 +50,17 @@ class Hospitals extends React.Component {
       return {
         dataSource: prevState.dataSource.cloneWithRows(nextProps.hospitals),
         hospitals: nextProps.hospitals,
-        isLoading: false
+        isLoading: false,
+        hasNextPage: nextProps.hasNextPage
       }
     }
     return null;
   }
 
   onEndReached = (event) => {
+    if (!this.state.hasNextPage) {
+      return;
+    }
     if (this.state.isLoading) {
       return;
     }
@@ -185,13 +190,13 @@ class Hospitals extends React.Component {
         <ListView
             dataSource={this.state.dataSource}
             renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-              {this.state.isLoading ? 'Loading...' : 'Loaded'}
+              {this.state.isLoading ? '加载中...' : '没有更多了'}
             </div>)}
             renderRow={row}
             className="list_view"
             pageSize={size}
             useBodyScroll
-            onScroll={() => { console.log('scroll'); }}
+            onScroll={() => { }}
             scrollRenderAheadDistance={500}
             onEndReached={this.onEndReached}
             onEndReachedThreshold={10}
@@ -206,7 +211,8 @@ function mapStateToProps(state) {
   return {
     hospitals: selectAllHospital(state.hospitals),
     filter: state.demand.filter,
-    supplies: state.demand.flatSupplies
+    supplies: state.demand.flatSupplies,
+    hasNextPage: state.hospitals.hasNextPage
   };
 }
 
