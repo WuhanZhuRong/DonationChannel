@@ -16,3 +16,6 @@
 .kuaidi-list .am-list-line {
   padding: 5px;
 }
+.kuaidi-list .am-list-item .am-list-line .am-list-brief {
+  margin-top: 0;
+}
