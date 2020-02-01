@@ -13,7 +13,8 @@ import {
   Checkbox,
   NavBar,
   Toast,
-  ListView
+  ListView,
+  Button
 } from "antd-mobile";
 import "./style.css";
 import { hospitalActions, selectAllHospital } from "../../redux/hospitals";
@@ -41,11 +42,10 @@ class Hospitals extends React.Component {
   }
 
   componentDidMount() {
-    page = 1;
-    this.props.searchHospital(this.props.filter, page++, size);
     if(this.props.supplies) {
       this.props.fetchSupplies();
     }
+    this.reloadData();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -57,6 +57,11 @@ class Hospitals extends React.Component {
       }
     }
     return null;
+  }
+
+  reloadData() {
+    page = 1;
+    this.props.searchHospital(this.props.filter, page++, size);
   }
 
   onEndReached = (event) => {
@@ -170,7 +175,7 @@ class Hospitals extends React.Component {
         </NavBar>
         <div>
           <Accordion>
-            <Accordion.Panel header="物资类型筛选">
+            <Accordion.Panel header="物资类型筛选" ref={ap => this.filterAccordion = ap}>
               <List>
                 {supplies.map(supply => (
                   <Checkbox.CheckboxItem
@@ -181,6 +186,7 @@ class Hospitals extends React.Component {
                     {supply.name}
                   </Checkbox.CheckboxItem>
                 ))}
+                <Button onClick={() => {this.filterAccordion.handleItemClick();this.reloadData();} }>确认</Button>
               </List>
             </Accordion.Panel>
           </Accordion>
