@@ -29,10 +29,10 @@ const Title = styled.h1`
   }
 `;
 const AffixBottom = styled.div`
-  flex: 0 0 auto;
-  margin-bottom: 10px;
-  margin-left: 9px;
-  margin-right: 9px;
+  width: 90%;
+  position: fixed;
+  bottom: 10px;
+  margin-left: 5%;
 `;
 const Container = styled.div`
   display: -webkit-box;
@@ -43,6 +43,7 @@ const Container = styled.div`
 `;
 const MainContent = styled.div`
   flex: 1 0 auto;
+  margin-bottom: 60px;
 `;
 
 function Supply(props) {
