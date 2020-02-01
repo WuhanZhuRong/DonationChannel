@@ -92,21 +92,23 @@ class Hospitals extends React.Component {
     const row = (rowData, sectionID, rowID) => {
       const hospital = hospitals[rowID];
       return (
-          <WingBlank size="md" key={rowID}>
               <Card className="hospital-card" key={hospital.id} full>
                 <Card.Header
                     title={
-                      <span
+                      <div style={{ width: "100%" }}>
+                        <span
                           style={{
                             fontSize: "16px",
-                            textAlign: "center",
-                            width: "100%"
+                            float: "left"
                           }}
-                      >
-                      {hospital.name}
-                    </span>
+                        >
+                          {hospital.name}
+                        </span>
+                        <span style={{ float: "right" }}>
+                          <Badge text={hospital.province} />
+                        </span>
+                      </div>
                     }
-                    extra={<Badge text={hospital.province} />}
                 />
                 <Card.Body>
                   {hospital.supplies && (
@@ -163,7 +165,6 @@ class Hospitals extends React.Component {
                     }
                 />
               </Card>
-          </WingBlank>
       );
     };
 
