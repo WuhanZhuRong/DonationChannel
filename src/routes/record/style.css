@@ -13,6 +13,9 @@
   width: auto;
   white-space: break-all;
 }
+.title-list .am-list-item .am-list-line .am-list-brief {
+  padding-left: 10px;
+}
 .kuaidi-list .am-list-line {
   padding: 5px;
 }

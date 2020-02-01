@@ -65,7 +65,7 @@ class ContactInfo extends React.Component {
         >
           捐助详情
         </NavBar>
-        <List>
+        <List className="title-list">
           <Item
             arrow="empty"
             key={id}

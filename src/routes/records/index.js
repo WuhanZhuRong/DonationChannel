@@ -68,7 +68,7 @@ class ContactInfo extends React.Component {
         <NavBar mode="dark">捐助记录</NavBar>
         <Flex>
           <Flex.Item>
-            <List>{this.renderItems()}</List>
+            <List className="title-list">{this.renderItems()}</List>
           </Flex.Item>
         </Flex>
         <Flex>
