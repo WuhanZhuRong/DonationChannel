@@ -21,6 +21,7 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.0.0"
   },
+  "homepage": ".",
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
