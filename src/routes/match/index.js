@@ -1,11 +1,16 @@
 import React from "react";
 import { Card, WingBlank, WhiteSpace, NavBar, Button } from "antd-mobile";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
+@withRouter
 class ContactInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  onNavigateTo(path) {
+    this.props.history.push(path);
   }
 
   render() {
@@ -21,9 +26,7 @@ class ContactInfo extends React.Component {
                 我们为捐助者和医院提供一个物资快速匹配的平台。
                 简单填写你的物资需求或捐助意愿，开始你的匹配。
               </p>
-              <Link to={"/search"}>
-                <Button type="primary">开始捐助</Button>
-              </Link>
+              <Button type="primary" onClick={this.onNavigateTo.bind(this, '/search')}>开始捐助</Button>
               <WhiteSpace />
               <Button type="warning">求助物资</Button>
               <WhiteSpace />
