@@ -13,13 +13,15 @@ import {
   Checkbox,
   NavBar,
   Toast,
-  ListView
+  ListView,
+  Button
 } from "antd-mobile";
 import "./style.css";
 import { hospitalActions, selectAllHospital } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import copy from "copy-to-clipboard";
+import { demandActions } from "../../redux/demand";
 
 let page;
 const size = 10;
@@ -41,8 +43,10 @@ class Hospitals extends React.Component {
   }
 
   componentDidMount() {
-    page = 1;
-    this.props.searchHospital(this.props.filter, page++, size);
+    if(this.props.supplies) {
+      this.props.fetchSupplies();
+    }
+    this.reloadData();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -55,6 +59,11 @@ class Hospitals extends React.Component {
       }
     }
     return null;
+  }
+
+  reloadData() {
+    page = 1;
+    this.props.searchHospital(this.props.filter, page++, size);
   }
 
   onEndReached = (event) => {
@@ -171,17 +180,18 @@ class Hospitals extends React.Component {
         </NavBar>
         <div>
           <Accordion>
-            <Accordion.Panel header="物资类型筛选">
+            <Accordion.Panel header="物资类型筛选" ref={ap => this.filterAccordion = ap}>
               <List>
                 {supplies.map(supply => (
                   <Checkbox.CheckboxItem
                     key={supply.id}
                     checked={filter.supplies.includes(supply.id)}
-                    // onChange={TODO change the value in redux}
+                    onChange={() => this.props.changeSelectedSupplies(supply.id, !filter.supplies.includes(supply.id))}
                   >
                     {supply.name}
                   </Checkbox.CheckboxItem>
                 ))}
+                <Button onClick={() => {this.filterAccordion.handleItemClick();this.reloadData();} }>确认</Button>
               </List>
             </Accordion.Panel>
           </Accordion>
@@ -218,7 +228,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators(hospitalActions, dispatch)
+    ...bindActionCreators(hospitalActions, dispatch),
+    ...bindActionCreators(demandActions, dispatch)
   };
 }
 
