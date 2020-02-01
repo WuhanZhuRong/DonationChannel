@@ -4,6 +4,9 @@ import "./style.css";
 import ContactInfo from "../contact-info";
 import Records from "../records";
 import Match from "../match";
+import { withRouter } from "react-router-dom";
+
+@withRouter
 class MainTabBar extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +15,15 @@ class MainTabBar extends React.Component {
       hidden: false,
       fullScreen: true
     };
+  }
+  componentDidMount() {
+    const { match = {} } = this.props;
+    const { params = {} } = match;
+    const { tab = "" } = params;
+    const tabs = ["match", "records", "contact"];
+    if (!!tab && tabs.includes(tab)) {
+      this.setState({ selectedTab: tab });
+    }
   }
 
   renderContent(content) {
@@ -68,9 +80,8 @@ class MainTabBar extends React.Component {
             }
             selected={this.state.selectedTab === "match"}
             onPress={() => {
-              this.setState({
-                selectedTab: "match"
-              });
+              this.props.history.replace(`/match`);
+              this.setState({ selectedTab: "match" });
             }}
             data-seed="logId"
           >
@@ -101,9 +112,8 @@ class MainTabBar extends React.Component {
             key="records"
             selected={this.state.selectedTab === "records"}
             onPress={() => {
-              this.setState({
-                selectedTab: "records"
-              });
+              this.props.history.replace(`/records`);
+              this.setState({ selectedTab: "records" });
             }}
             data-seed="logId1"
           >
@@ -134,9 +144,8 @@ class MainTabBar extends React.Component {
             key="contact"
             selected={this.state.selectedTab === "contact"}
             onPress={() => {
-              this.setState({
-                selectedTab: "contact"
-              });
+              this.props.history.replace(`/contact`);
+              this.setState({ selectedTab: "contact" });
             }}
           >
             {this.renderContent(<ContactInfo />)}

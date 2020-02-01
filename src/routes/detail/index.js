@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Card,
-  Icon,
-  List,
-  Modal,
-  NavBar,
-  Toast
-} from "antd-mobile";
+import { Card, Icon, List, Modal, NavBar, Toast } from "antd-mobile";
 import "./style.css";
 import { API_GET_HOSPITAL_BY_ID, get } from "../../utils/api";
 import copy from "copy-to-clipboard";
@@ -53,7 +46,7 @@ class Detail extends React.Component {
         <NavBar
           icon={<Icon type="left" />}
           onLeftClick={() => {
-            this.props.history.push("/hospitals");
+            this.props.history.goBack();
           }}
           mode="dark"
         >
