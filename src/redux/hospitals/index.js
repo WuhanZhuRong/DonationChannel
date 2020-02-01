@@ -9,7 +9,7 @@ export const hospitalActions = {
     );
     return dispatch =>
       get(API_GET_HOSPITALS, {
-        city: "武汉" || filter.cityName,
+        city: filter.cityName,
         page,
         size
       }).then(res =>
@@ -25,7 +25,7 @@ export const hospitalActions = {
     );
     return dispatch =>
       get(API_GET_HOSPITALS, {
-        city: "武汉" || filter.cityName,
+        city: filter.cityName,
         page,
         size
       }).then(res =>

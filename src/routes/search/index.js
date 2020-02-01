@@ -65,15 +65,17 @@ function Supply(props) {
           </span>
         </Title>
         <TagContainer>
-          {supply.types.map(type => (
-            <Tag
-              key={type.id}
-              selected={props.supplies.includes(type.id)}
-              onChange={selected => props.handleSelect(type.id, selected)}
-            >
-              {type.name}
-            </Tag>
-          ))}
+          {supply.types
+            .filter(type => type.name !== supply.name)
+            .map(type => (
+              <Tag
+                key={type.id}
+                selected={props.supplies.includes(type.id)}
+                onChange={selected => props.handleSelect(type.id, selected)}
+              >
+                {type.name}
+              </Tag>
+            ))}
         </TagContainer>
       </div>
     );
@@ -204,8 +206,23 @@ class Search extends React.Component {
     if (cityCode && cityCode.length >= 2) {
       cityName = districtData[cityCode[0]]["cities"][cityCode[1]]["name"];
     }
+    // 记录大类，因为有些医院只有大类没有小类，要作为筛选条件
+    // 只要该大类下有被选中的，该大类映射的小类就被选中
+    const additionalSupplies = this.props.allSupplies
+      .filter(supply => {
+        return supplies.some(each =>
+          supply.types.map(each => each.id).includes(each)
+        );
+      })
+      // 判断每个类别的重名子类
+      .map(supply => {
+        const arr = supply.types.filter(type => type.name === supply.name);
+        return arr && arr.length && arr[0].id;
+      })
+      .filter(each => each);
+
     this.props.setDemandsFilter({
-      supplies,
+      supplies: supplies.concat(additionalSupplies),
       cityCode: cityCode.length >= 2 && cityCode[1],
       cityName
     });
