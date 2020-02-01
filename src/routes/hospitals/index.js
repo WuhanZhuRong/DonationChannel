@@ -20,6 +20,7 @@ import { hospitalActions, selectAllHospital } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import copy from "copy-to-clipboard";
+import { demandActions } from "../../redux/demand";
 
 let page;
 const size = 10;
@@ -42,6 +43,9 @@ class Hospitals extends React.Component {
   componentDidMount() {
     page = 1;
     this.props.searchHospital(this.props.filter, page++, size);
+    if(this.props.supplies) {
+      this.props.fetchSupplies();
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -172,7 +176,7 @@ class Hospitals extends React.Component {
                   <Checkbox.CheckboxItem
                     key={supply.id}
                     checked={filter.supplies.includes(supply.id)}
-                    // onChange={TODO change the value in redux}
+                    onChange={() => this.props.changeSelectedSupplies(supply.id, !filter.supplies.includes(supply.id))}
                   >
                     {supply.name}
                   </Checkbox.CheckboxItem>
@@ -212,7 +216,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators(hospitalActions, dispatch)
+    ...bindActionCreators(hospitalActions, dispatch),
+    ...bindActionCreators(demandActions, dispatch)
   };
 }
 

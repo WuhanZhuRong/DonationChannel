@@ -16,6 +16,17 @@ export const demandActions = {
   setDemandsFilter(filter) {
     return { type: "SET_DEMANDS_FILTER", filter };
   },
+  changeSelectedSupplies(supply, isAdd = true) {
+    return isAdd
+        ? {
+          type: "ADD_SUPPLY_TO_FILTER",
+          supply
+        }
+        : {
+          type: "REMOVE_SUPPLY_FROM_FILTER",
+          supply
+        }
+  },
   fetchSupplies() {
     return dispatch =>
       get(API_GET_SUPPLIES).then(res =>
@@ -44,6 +55,25 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         filter: action.filter
+      };
+    case "ADD_SUPPLY_TO_FILTER":
+      return {
+        ...state,
+        filter: {
+          ...state.filter,
+          supplies: [...state.filter.supplies, action.supply]
+        }
+      };
+    case "REMOVE_SUPPLY_FROM_FILTER":
+      const { supplies } = state.filter;
+      const index = supplies.indexOf(action.supply);
+      const newSupplies = [...supplies].splice(index, 1);
+      return {
+        ...state,
+        filter: {
+          ...state.filter,
+          supplies: newSupplies
+        }
       };
     default:
       return state;
