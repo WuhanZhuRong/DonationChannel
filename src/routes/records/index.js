@@ -43,6 +43,7 @@ class ContactInfo extends React.Component {
       const { id = 0, name = "", time = "", total = 0 } = t;
       return (
         <Item
+          key={id}
           arrow="horizontal"
           thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
           multipleLine
