@@ -80,7 +80,7 @@ export default function reducer(state = initialState, action) {
 function rebaseHospitalData(remoteData) {
   let ids = [];
   let byId = {};
-  remoteData.forEach(hospital => {
+  remoteData && remoteData.forEach(hospital => {
     ids.push(hospital["id"]);
     byId[hospital["id"]] = hospital;
   });
