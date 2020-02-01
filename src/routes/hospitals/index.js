@@ -12,7 +12,6 @@ import {
   NavBar,
   Toast,
   ListView,
-  Grid,
   Button
 } from "antd-mobile";
 import "./style.css";
