@@ -5,7 +5,7 @@ export const hospitalActions = {
     console.log('===searchHospital,发起请求===', filter.cityCode, filter.supplies);
     return dispatch =>
       get(API_GET_HOSPITALS, {
-        city: "武汉" || filter.cityName,
+        city: filter.cityName,
         page,
         size
       }).then(res => dispatch(fetchHospitalsSuccess(res.data.data)));
@@ -14,7 +14,7 @@ export const hospitalActions = {
     console.log('===searchHospitalInAdditional,发起请求===', filter.cityCode, filter.supplies, page);
     return dispatch =>
         get(API_GET_HOSPITALS, {
-          city: "武汉" || filter.cityName,
+          city: filter.cityName,
           page,
           size
         }).then(res => dispatch(fetchHospitalsInAdditionalSuccess(res.data.data)));

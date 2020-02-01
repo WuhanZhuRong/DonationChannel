@@ -145,7 +145,7 @@ class Search extends React.Component {
       let data = districtData[index].cities;
       Object.keys(data).forEach(index => {
         if (data[index].code === cityCode) {
-          cityCodeArr = [itemLevel1.code, cityCode];
+          cityCodeArr = [itemLevel1.value, cityCode];
         }
         let itemLevel2 = {};
         itemLevel2.value = data[index].code;
@@ -200,9 +200,12 @@ class Search extends React.Component {
 
   handleSubmit = () => {
     const { supplies, cityCode } = this.state;
-    const cityName =
-      cityCode.length >= 2 &&
-      districtData[cityCode[0]]["cities"][cityCode[1]]["name"];
+    let cityName;
+    if (cityCode) {
+      cityName =
+        cityCode.length >= 2 &&
+        districtData[cityCode[0]]["cities"][cityCode[1]]["name"];
+    }
     this.props.setDemandsFilter({
       supplies,
       cityCode: cityCode.length >= 2 && cityCode[1],
@@ -234,6 +237,7 @@ class Search extends React.Component {
           <List style={{ backgroundColor: "white" }}>
             <Picker
               title="选择地区"
+              extra="全部"
               data={antdDistrict}
               value={cityCode}
               onChange={v => this.handleCityCodeChange(v)}
