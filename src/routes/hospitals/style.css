@@ -1,23 +1,25 @@
 .list_view {
-/*        TODO*/
+}
+.list-view-section-body {
+  background-color: "#f5f5f9";
 }
 
 .hospital-card {
-    margin: 10px 10px;
+  margin: 10px 10px;
 }
 
 .card-supplies-name {
-     color: gray;
-     font-size: 12px;
- }
+  color: gray;
+  font-size: 12px;
+}
 
 .card-supplies-number {
-     font-size: 16px;
-     font-weight: bold;
- }
+  font-size: 16px;
+  font-weight: bold;
+}
 
 .card-action-icon {
-    display: block;
-    width: 20%;
-    margin: 0 auto;
+  display: block;
+  width: 20%;
+  margin: 0 auto;
 }

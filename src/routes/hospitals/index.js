@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   Badge,
-  WingBlank,
   WhiteSpace,
   Card,
   Icon,
@@ -28,35 +27,34 @@ const size = 10;
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Hospitals extends React.Component {
-
   constructor(props) {
     super(props);
     const dataSource = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1 !== row2,
+      rowHasChanged: (row1, row2) => row1 !== row2
     });
     this.state = {
       dataSource,
       hospitals: [],
       isLoading: false,
       hasNextPage: true
-    }
+    };
   }
 
   componentDidMount() {
-    if(this.props.supplies) {
+    if (this.props.supplies) {
       this.props.fetchSupplies();
     }
     this.reloadData();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if(prevState.hospitals !== nextProps.hospitals) {
+    if (prevState.hospitals !== nextProps.hospitals) {
       return {
         dataSource: prevState.dataSource.cloneWithRows(nextProps.hospitals),
         hospitals: nextProps.hospitals,
         isLoading: false,
         hasNextPage: nextProps.hasNextPage
-      }
+      };
     }
     return null;
   }
@@ -66,7 +64,7 @@ class Hospitals extends React.Component {
     this.props.searchHospital(this.props.filter, page++, size);
   }
 
-  onEndReached = (event) => {
+  onEndReached = event => {
     if (!this.state.hasNextPage) {
       return;
     }
@@ -85,86 +83,92 @@ class Hospitals extends React.Component {
     }
   };
 
-
   render() {
     const { hospitals, filter, supplies } = this.props;
 
     const row = (rowData, sectionID, rowID) => {
       const hospital = hospitals[rowID];
       return (
-              <Card className="hospital-card" key={hospital.id} full>
-                <Card.Header
-                    title={
-                      <div style={{ width: "100%" }}>
-                        <span
-                          style={{
-                            fontSize: "16px",
-                            float: "left"
-                          }}
-                        >
-                          {hospital.name}
-                        </span>
-                        <span style={{ float: "right" }}>
-                          <Badge text={hospital.province} />
-                        </span>
-                      </div>
+        <Card full style={{ marginBottom: "10px" }}>
+          <Card.Header
+            title={
+              <span style={{ width: "100%", lineHeight: "30px" }}>
+                <span
+                  style={{
+                    fontSize: "16px",
+                    float: "left"
+                  }}
+                >
+                  {hospital.name}
+                </span>
+                <span style={{ float: "right" }}>
+                  <Badge text={hospital.province} />
+                </span>
+              </span>
+            }
+          />
+          <Card.Body>
+            <div>This is content of `Card`</div>
+          </Card.Body>
+          <Card.Footer
+            content={
+              <Flex justify="end">
+                <Flex.Item>
+                  <div
+                    className="card-action-icon"
+                    onClick={() =>
+                      this.copyToClickBoard(hospital.phone, "联系方式")
                     }
-                />
-                <Card.Body>
-                  {hospital.supplies && (
-                      <Grid
-                          data={hospital.supplies.split("、") || []}
-                          columnNum={2}
-                          square={false}
-                          hasLine={false}
-                          renderItem={supply => (
-                              <div
-                                  key={supply ? supply.name : ""}
-                                  className="card-supplies"
-                              >
-                                <div className="card-supplies-name">{supply}</div>
-                                <WhiteSpace size="sm" />
-                                <div className="card-supplies-number">{"不限量"}</div>
-                              </div>
-                          )}
-                      />
-                  )}
-                </Card.Body>
-                <Card.Footer
-                    content={
-                      <Flex justify="end">
-                        <Flex.Item>
-                          <div
-                              className="card-action-icon"
-                              onClick={() =>
-                                  this.copyToClickBoard(hospital.phone, "联系方式")
-                              }
-                          >
-                            <i className="ai-phone" />
-                          </div>
-                        </Flex.Item>
-                        <Flex.Item>
-                          <div
-                              className="card-action-icon"
-                              onClick={() =>
-                                  this.copyToClickBoard(hospital.address, "医院地址")
-                              }
-                          >
-                            <i className="ai-home" />
-                          </div>
-                        </Flex.Item>
-                        <Flex.Item>
-                          <Link
-                              className="card-action-icon"
-                              to={"/hospitals/" + hospital.id}
-                          >
-                            <Icon size="md" type="ellipsis" />
-                          </Link>
-                        </Flex.Item>
-                      </Flex>
+                  >
+                    <i className="ai-phone" />
+                  </div>
+                </Flex.Item>
+                <Flex.Item>
+                  <div
+                    className="card-action-icon"
+                    onClick={() =>
+                      this.copyToClickBoard(hospital.address, "医院地址")
                     }
-                />
-              </Card>
+                  >
+                    <i className="ai-home" />
+                  </div>
+                </Flex.Item>
+                <Flex.Item>
+                  <Link
+                    className="card-action-icon"
+                    to={"/hospitals/" + hospital.id}
+                  >
+                    <Icon size="md" type="ellipsis" />
+                  </Link>
+                </Flex.Item>
+              </Flex>
+            }
+          />
+        </Card>
+        // <Card className="hospital-card" key={hospital.id} full>
+
+        //   <Card.Body>
+        //     {hospital.supplies && (
+        //       <Grid
+        //         data={hospital.supplies.split("、") || []}
+        //         columnNum={2}
+        //         square={false}
+        //         hasLine={false}
+        //         renderItem={supply => (
+        //           <div
+        //             key={supply ? supply.name : ""}
+        //             className="card-supplies"
+        //           >
+        //             <div className="card-supplies-name">{supply}</div>
+        //             <WhiteSpace size="sm" />
+        //             <div className="card-supplies-number">{"不限量"}</div>
+        //           </div>
+        //         )}
+        //       />
+        //     )}
+        //   </Card.Body>
+
+        // </Card>
       );
     };
 
@@ -181,40 +185,56 @@ class Hospitals extends React.Component {
         </NavBar>
         <div>
           <Accordion>
-            <Accordion.Panel header="物资类型筛选" ref={ap => this.filterAccordion = ap}>
+            <Accordion.Panel
+              header="物资类型筛选"
+              ref={ap => (this.filterAccordion = ap)}
+            >
               <List>
                 {supplies.map(supply => (
                   <Checkbox.CheckboxItem
                     key={supply.id}
                     checked={filter.supplies.includes(supply.id)}
-                    onChange={() => this.props.changeSelectedSupplies(supply.id, !filter.supplies.includes(supply.id))}
+                    onChange={() =>
+                      this.props.changeSelectedSupplies(
+                        supply.id,
+                        !filter.supplies.includes(supply.id)
+                      )
+                    }
                   >
                     {supply.name}
                   </Checkbox.CheckboxItem>
                 ))}
-                <Button onClick={() => {this.filterAccordion.handleItemClick();this.reloadData();} }>确认</Button>
+                <Button
+                  onClick={() => {
+                    this.filterAccordion.handleItemClick();
+                    this.reloadData();
+                  }}
+                >
+                  确认
+                </Button>
               </List>
             </Accordion.Panel>
           </Accordion>
         </div>
         <WhiteSpace />
         <ListView
-            dataSource={this.state.dataSource}
-            renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-              {this.state.isLoading ? '加载中...' : '没有更多了'}
-            </div>)}
-            renderRow={row}
-            className="list_view"
-            pageSize={size}
-            useBodyScroll
-            onScroll={() => { }}
-            scrollRenderAheadDistance={500}
-            onEndReached={this.onEndReached}
-            onEndReachedThreshold={10}
+          dataSource={this.state.dataSource}
+          renderFooter={() => (
+            <div style={{ padding: 30, textAlign: "center" }}>
+              {this.state.isLoading ? "加载中..." : "没有更多了"}
+            </div>
+          )}
+          renderRow={row}
+          className="list_view"
+          pageSize={size}
+          useBodyScroll
+          onScroll={() => {}}
+          scrollRenderAheadDistance={500}
+          onEndReached={this.onEndReached}
+          onEndReachedThreshold={10}
         />
       </div>
     );
-
   }
 }
 
