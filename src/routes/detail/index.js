@@ -7,10 +7,11 @@ import styled from "styled-components";
 const StyledCard = styled(Card)`
 .detail-card-header {
   width: 100%;
+  padding: 0 40px;
 }
 
 .detail-card-body {
-  padding: 0 40px;
+  padding: 0 40px 40px 40px;
 }
 
 .detail-card-body-category-list {
@@ -43,27 +44,23 @@ const StyledCard = styled(Card)`
   border-radius: 4px;
 }
 
-.detail-card-header-row {
-  display: flex;
-  justify-content: space-between;
+.detail-card-header table {
+  tbody {
+    vertical-align: inherit;
+  }
 
-  > div span:first-child {
+  td:first-child {
     width: 60px;
-    text-align: right;
+    text-align: center;
     display: inline-block;
     font-size: 13px;
     color: #555;
     margin-right: 8px;
   }
 
-  > div {
-    display: flow;
-    align-items: center;
-  }
-
   i {
-    font-size: 30px;
-    padding: 10px;
+    font-size: 20px;
+    padding: 8px;
   }
 }
 `;
@@ -122,22 +119,32 @@ class Detail extends React.Component {
                 <h3>
                   {hospital.hospital}
                 </h3>
-
-                <div className="detail-card-header-row">
-                  <div>
-                    <span>联系方式:</span>
-                    <a href={`tel://${hospital.mobile}`}>{hospital.mobile}</a>
-                  </div>
-                  <i className="ai-phone" onClick={() => this.copyToClickBoard(hospital.mobile, "联系方式")} />
-                </div>
-                
-                <div className="detail-card-header-row">
-                  <div>
-                    <span>地址:</span>
-                    <span>{hospital.street}</span>
-                  </div>
-                  <i className="ai-home" onClick={() => this.copyToClickBoard(hospital.street, "医院地址")} />
-                </div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        联系方式:
+                      </td>
+                      <td>
+                        <a href={`tel://${hospital.mobile}`}>{hospital.mobile}</a>
+                      </td>
+                      <td>
+                        <i className="ai-phone" onClick={() => this.copyToClickBoard(hospital.mobile, "联系方式")} />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:
+                      </td>
+                      <td>
+                        <span>{hospital.street}</span>
+                      </td>
+                      <td>
+                        <i className="ai-home" onClick={() => this.copyToClickBoard(hospital.street, "医院地址")} />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             }
           />
