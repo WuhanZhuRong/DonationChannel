@@ -13,43 +13,16 @@ export const hospitalActions = {
         page,
         size
       }).then(res =>
-        dispatch(fetchHospitalsSuccess(res.data.data, res.data.hasNextPage))
-      );
-  },
-  searchHospitalInAdditional(filter, page, size) {
-    console.log(
-      "===searchHospitalInAdditional,发起请求===",
-      filter.cityCode,
-      filter.supplies,
-      page
-    );
-    return dispatch =>
-      get(API_GET_HOSPITALS, {
-        city: filter.cityName,
-        page,
-        size
-      }).then(res =>
-        dispatch(
-          fetchHospitalsInAdditionalSuccess(res.data.data, res.data.hasNextPage)
-        )
+        dispatch(fetchHospitalsSuccess(res.data))
       );
   }
 };
 
 // action creator
-function fetchHospitalsSuccess(data, hasNextPage) {
+function fetchHospitalsSuccess(responseData) {
   return {
     type: "FETCH_HOSPITALS_SUCCESS",
-    data,
-    hasNextPage
-  };
-}
-
-function fetchHospitalsInAdditionalSuccess(data, hasNextPage) {
-  return {
-    type: "FETCH_HOSPITALS_IN_ADDITIONAL_SUCCESS",
-    data,
-    hasNextPage
+    responseData
   };
 }
 
@@ -64,14 +37,17 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case "FETCH_HOSPITALS_SUCCESS":
-      return { ...state, ...rebaseHospitalData(action.data) };
-    case "FETCH_HOSPITALS_IN_ADDITIONAL_SUCCESS":
-      const additionalData = rebaseHospitalData(action.data);
-      return {
-        ...state,
-        ids: [...state.ids, ...additionalData.ids],
-        byId: { ...state.byId, ...additionalData.byId }
-      };
+      const { data, hasPreviousPage, hasNextPage } = action.responseData;
+      const rebasedData = rebaseHospitalData(data);
+      if(hasPreviousPage) {
+        return {
+          ...state,
+          ids: [...state.ids, ...rebasedData.ids],
+          byId: { ...state.byId, ...rebasedData.byId }
+        };
+      }else {
+        return { ...state, ...rebasedData };
+      }
     default:
       return state;
   }

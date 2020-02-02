@@ -85,7 +85,7 @@ class Hospitals extends React.Component {
       return;
     }
     let { page } = this.state;
-    this.props.searchHospitalInAdditional(this.props.filter, page + 1, PAGE_SIZE);
+    this.props.searchHospital(this.props.filter, page + 1, PAGE_SIZE);
 
     this.setState({ isLoading: true, page: page + 1 });
   };
