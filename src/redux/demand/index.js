@@ -5,7 +5,7 @@ const initialState = {
   filter: {
     cityCode: "420100", // 湖北武汉
     supplies: [],
-    cityName: ""
+    cityName: "武汉市"
   },
   allSupplies: [],
   flatSupplies: []
