@@ -1,89 +1,17 @@
 import React from "react";
-import { Flex, NavBar, List, Pagination } from "antd-mobile";
-import "./style.css";
-import { withRouter } from "react-router-dom";
+import building_png from '../../assets/building.png';
 
-const Item = List.Item;
-const Brief = Item.Brief;
-
-@withRouter
-class ContactInfo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      records: []
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      records: [
-        {
-          id: 1,
-          name: "启航",
-          total: 30,
-          items: [],
-          time: "2020年2月1日 19点26分"
-        },
-        {
-          id: 2,
-          name: "某某人",
-          total: 10,
-          items: [],
-          time: "2020年2月1日 19点24分"
-        }
-      ]
-    });
-  }
-
-  renderItems = () => {
-    let res = [];
-    const { records = [] } = this.state;
-    res = records.map(t => {
-      const { id = 0, name = "", time = "", total = 0 } = t;
-      return (
-        <Item
-          key={id}
-          arrow="horizontal"
-          thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
-          multipleLine
-          onClick={() => {
-            this.props.history.push(`/record/${id}`);
-          }}
-        >
-          【{name}】捐助了{total}件物资 <Brief>{time}</Brief>
-        </Item>
-      );
-    });
-    return res;
-  };
+class Records extends React.Component {
 
   render() {
-    const locale = {
-      prevText: "上一页",
-      nextText: "下一页"
-    };
     return (
-      <div>
-        <NavBar mode="dark">捐助记录</NavBar>
-        <Flex>
-          <Flex.Item>
-            <List className="title-list">{this.renderItems()}</List>
-          </Flex.Item>
-        </Flex>
-        <Flex>
-          <Flex.Item>
-            <Pagination
-              className="pagination"
-              total={5}
-              current={1}
-              locale={locale}
-            />
-          </Flex.Item>
-        </Flex>
-      </div>
+        <div style={{display: 'flex-inline', paddingTop: '60%'}}>
+          <img src={building_png} alt='图片'/><span>建设中</span>
+        </div>
+
     );
   }
+
 }
 
-export default ContactInfo;
+export default Records;
