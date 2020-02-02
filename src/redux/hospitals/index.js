@@ -48,9 +48,3 @@ export default function reducer(state = initialState, action) {
       return state;
   }
 }
-
-//selector
-
-export function selectAllHospital(hospitals) {
-  return hospitals.data;
-}

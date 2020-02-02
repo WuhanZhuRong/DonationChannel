@@ -16,7 +16,7 @@ import {
   Button
 } from "antd-mobile";
 import "./style.css";
-import { hospitalActions, selectAllHospital } from "../../redux/hospitals";
+import { hospitalActions } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import copy from "copy-to-clipboard";
 import { demandActions } from "../../redux/demand";
