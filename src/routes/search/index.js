@@ -139,23 +139,20 @@ class Search extends React.Component {
     });
 
     let cityCodeArr = [];
-    let antdDistrict = [];
-    Object.keys(districtData).forEach(index => {
-      let itemLevel1 = {};
-      itemLevel1.value = districtData[index].code;
-      itemLevel1.label = districtData[index].name;
-      itemLevel1.children = [];
-      let data = districtData[index].cities;
-      Object.keys(data).forEach(index => {
-        if (data[index].code === cityCode) {
-          cityCodeArr = [itemLevel1.value, cityCode];
-        }
-        let itemLevel2 = {};
-        itemLevel2.value = data[index].code;
-        itemLevel2.label = data[index].name;
-        itemLevel1.children.push(itemLevel2);
-      });
-      antdDistrict.push(itemLevel1);
+    let antdDistrict = Object.values(districtData).map(province => {
+      return {
+        value: province.code,
+        label: province.name,
+        children: Object.values(province.cities).map(city => {
+          if (city.code === cityCode) {
+            cityCodeArr = [province.code, cityCode];
+          }
+          return {
+            value: city.code,
+            label: city.name,
+          };
+        })
+      };
     });
     this.setState({
       antdDistrict,
