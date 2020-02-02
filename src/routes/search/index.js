@@ -30,20 +30,22 @@ const Title = styled.h1`
 `;
 const AffixBottom = styled.div`
   width: 90%;
-  position: fixed;
-  bottom: 10px;
-  margin-left: 5%;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
 `;
 const Container = styled.div`
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  .am-navbar {
+    flex-shrink: 0;
+  }
 `;
 const MainContent = styled.div`
-  flex: 1 0 auto;
-  margin-bottom: 60px;
+  flex: 1 1 auto;
+  overflow: scroll;
 `;
 
 function Supply(props) {
