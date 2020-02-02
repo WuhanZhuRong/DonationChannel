@@ -62,30 +62,6 @@ const StyledCard = styled(Card)`
     padding: 8px;
   }
 }
-
-.detail-card-header-row {
-  display: flex;
-  justify-content: space-between;
-
-  > div span:first-child {
-    width: 60px;
-    text-align: right;
-    display: inline-block;
-    font-size: 13px;
-    color: #555;
-    margin-right: 8px;
-  }
-
-  > div {
-    display: flow;
-    align-items: center;
-  }
-
-  i {
-    font-size: 30px;
-    padding: 10px;
-  }
-}
 `;
 
 class Detail extends React.Component {
