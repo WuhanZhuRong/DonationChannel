@@ -3,7 +3,7 @@ import { get, API_GET_SUPPLIES } from "../../utils/api";
 //reducer
 const initialState = {
   filter: {
-    cityCode: "",
+    cityCode: "420100", // 湖北武汉
     supplies: [],
     cityName: ""
   },
