@@ -14,7 +14,7 @@ $ yarn build
 ```
 更多命令可在[package.json](./package.json)中查看
 
-## Contents
+## Content
 [协作流程](#procedure)
 
 [该平台主要开源项目](#project)
