@@ -16,7 +16,7 @@ import {
   Button
 } from "antd-mobile";
 import "./style.css";
-import { hospitalActions, selectAllHospital } from "../../redux/hospitals";
+import { hospitalActions } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
 import copy from "copy-to-clipboard";
 import { demandActions } from "../../redux/demand";
@@ -85,7 +85,7 @@ class Hospitals extends React.Component {
       return;
     }
     let { page } = this.state;
-    this.props.searchHospitalInAdditional(this.props.filter, page + 1, PAGE_SIZE);
+    this.props.searchHospital(this.props.filter, page + 1, PAGE_SIZE);
 
     this.setState({ isLoading: true, page: page + 1 });
   };
@@ -231,7 +231,7 @@ class Hospitals extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    hospitals: selectAllHospital(state.hospitals),
+    hospitals: state.hospitals.data,
     filter: state.demand.filter,
     supplies: state.demand.flatSupplies,
     hasNextPage: state.hospitals.hasNextPage
