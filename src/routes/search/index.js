@@ -13,21 +13,30 @@ const TagContainer = styled.div`
   padding-top: 9px;
   flex-direction: row;
   flex-wrap: wrap;
-  div {
-    margin-left: 9px;
-    margin-bottom: 9px;
+  width: 100%;
+
+  .am-tag {
+    height: auto;
+    margin-left: 8px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    padding: 5px 15px;
   }
 `;
 const Title = styled.h1`
   font-size: 14px;
   margin-left: 9px;
   margin-bottom: 0px;
-  .select {
-    float: right;
-    color: #108ee9;
-    margin-right: 9px;
-  }
 `;
+
+const SelectButton = styled.span`
+  float: right;
+  color: #108ee9;
+  font-size: 15px;
+  margin-top: -10px;
+  padding: 10px;
+`
+
 const AffixBottom = styled.div`
   width: 90%;
   margin: auto;
@@ -60,12 +69,11 @@ function Supply(props) {
       <div key={supply.name}>
         <Title>
           {supply.name}
-          <span
+          <SelectButton
             onClick={() => props.handleSelectAll(supply.name)}
-            className="select"
           >
             {selectedAll ? "取消全选" : "全选"}
-          </span>
+          </SelectButton>
         </Title>
         <TagContainer>
           {supply.types
