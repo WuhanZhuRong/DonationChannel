@@ -8,7 +8,7 @@ export function post(url, body, params) {
   return axios.post(url, body, {params});
 }
 
-const basic = 'http://czr.vipdesk.cn:8080/api/';
+const basic = 'https://czr-api.vipdesk.cn/api/';
 // const basic = 'http://localhost:8181/zhurong/';
 
 export const API_GET_HOSPITALS = `${basic}hospitals`;
