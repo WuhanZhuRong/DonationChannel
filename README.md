@@ -18,6 +18,10 @@ $ yarn start # http://localhost:3000
 ## Content
 [平台简介](#introduce)
 
+* [我们在做什么](#introduce_aim)
+* [如何使用](#introduce_use)
+* [功能规划](#introduce_planning)
+
 [协作流程](#procedure)
 
 [该平台主要开源项目](#project)
@@ -51,7 +55,7 @@ $ yarn start # http://localhost:3000
 
 # 平台简介<a name="introduce"></a>
 
--   我们在做什么
+-   我们在做什么<a name="introduce_aim"></a>
     
     全国的疫情蔓延趋势十分紧急，各大医院、救治中心的物资供应都出现了问题，与此同时，也存在大量的民间爱心人士，想捐、有能力捐，却难以找到合适的受捐医院。
     
@@ -61,11 +65,11 @@ $ yarn start # http://localhost:3000
     
     我们期冀这个平台能够承担一个完整的捐赠流程闭环，包括但不限于，物资需求匹配，保留并跟踪捐赠行为，捐赠信息的公示和传播
     
--   如何使用我们产品
+-   如何使用我们产品<a name="introduce_use"></a>
 
     进入[平台首页](https://czr.vipdesk.cn/search),点击开始捐助，选择您拥有的物资，和希望捐赠的城市，点击匹配，即可获取信息列表。
     
--   功能规划
+-   功能规划<a name="introduce_planning"></a>
 
     1. 物资需求信息检索及展示（已完成）
     2. 捐赠行为保留、跟踪、校验、宣传（开发中）
