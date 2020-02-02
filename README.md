@@ -110,7 +110,7 @@ $ yarn build
 
 * 扫码加入ChinaZhuRong微信大群
 
-![图片]()
+![图片](https://raw.githubusercontent.com/WuhanZhuRong/DonationChannel/development/pics/qrcode_main_project_group.png)
 
 * 微信小组
 
