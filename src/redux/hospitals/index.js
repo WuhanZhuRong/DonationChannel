@@ -30,7 +30,6 @@ function fetchHospitalsSuccess(responseData) {
 const initialState = {
   ids: [],
   byId: {}, // TODO: should be removed
-  detail: {}, // TODO: should return detail not length one list
   hasNextPage: true
 };
 
