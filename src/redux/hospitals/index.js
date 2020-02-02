@@ -39,10 +39,15 @@ export default function reducer(state = initialState, action) {
       if(hasPreviousPage) {
         return {
           ...state,
+          hasNextPage,
           data:  [...state.data, ...data]
         };
       }else {
-        return { ...state, data };
+        return {
+          ...state,
+          hasNextPage,
+          data
+        };
       }
     default:
       return state;
