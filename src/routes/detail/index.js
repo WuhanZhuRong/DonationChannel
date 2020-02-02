@@ -7,10 +7,11 @@ import styled from "styled-components";
 const StyledCard = styled(Card)`
 .detail-card-header {
   width: 100%;
+  padding: 0 40px;
 }
 
 .detail-card-body {
-  padding: 0 40px;
+  padding: 0 40px 40px 40px;
 }
 
 .detail-card-body-category-list {
@@ -50,7 +51,7 @@ const StyledCard = styled(Card)`
 
   td:first-child {
     width: 60px;
-    text-align: right;
+    text-align: center;
     display: inline-block;
     font-size: 13px;
     color: #555;
@@ -133,7 +134,7 @@ class Detail extends React.Component {
                     </tr>
                     <tr>
                       <td>
-                        地址:
+                        地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:
                       </td>
                       <td>
                         <span>{hospital.street}</span>
