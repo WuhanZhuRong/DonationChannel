@@ -1,19 +1,13 @@
-## Quick Start
+# [WuhanZhuRong祝融](https://github.com/WuhanZhuRong)
 
-```shell
-$ yarn
-$ yarn start # http://localhost:3000
-```
-更多命令可在[package.json](./package.json)中查看
+---
 
-安装、启动[后端项目](https://github.com/WuhanZhuRong/platform-common-v7.git)
 
-## Technology Stack
+为了阻挡病毒的肆虐，武汉的医护人员已经在尽职坚守，上海浙江的医护专家已经奔赴武汉，全国各地的医护专家已经整装待发。
 
--   语言: [JavaScript](https://www.javascript.com)
--   框架: [React](https://reactjs.org)
--   UI组件: [ANT Design](https://ant.design)
--   状态管理: [Redux](https://redux.js.org)
+为了病人，为了中国，为了我们所有人，他们在恐惧中，仍然无畏地冲向最前线。
+
+这场血淋淋的战争没有弥漫的硝烟，却充斥着令人生畏的病毒。祝融平台的成员们来自五湖四海，在一场由[DoraHack](https://dorahacks.com/)组织的[黑客马拉松](https://mp.weixin.qq.com/s/mre0XVeTzsNP90sVWjFs5g)中相遇，由最初的几个人，到现在三十多号人，我们在两天前，从0开始，慢慢探索，希望以技术为手段为控制疫情做出一些贡献。
 
 ## Content
 [平台简介](#introduce)
@@ -42,16 +36,7 @@ $ yarn start # http://localhost:3000
 
 [FAQ常见问题](#FAQ)
 
-# [WuhanZhuRong祝融](https://github.com/WuhanZhuRong)
-
----
-
-
-为了阻挡病毒的肆虐，武汉的医护人员已经在尽职坚守，上海浙江的医护专家已经奔赴武汉，全国各地的医护专家已经整装待发。
-
-为了病人，为了中国，为了我们所有人，他们在恐惧中，仍然无畏地冲向最前线。
-
-这场血淋淋的战争没有弥漫的硝烟，却充斥着令人生畏的病毒。我们来自五湖四海，在一场黑客马拉松中相遇，由最初的几个人，到现在三十多号人，我们在两天前，从0开始，慢慢探索。
+[技术文档](#tech)
 
 # 平台简介<a name="introduce"></a>
 
@@ -165,3 +150,22 @@ AI项目产品组   |
 整个项目的FAQ，待整理
 
 数据收集FAQ，[请查看](https://shimo.im/docs/hG3CWDryqXPh86qQ/ 《数据收集FAQ》)
+
+# 技术文档 <a name="tech"></a>
+
+## Quick Start
+
+```shell
+$ yarn
+$ yarn start # http://localhost:3000
+```
+更多命令可在[package.json](./package.json)中查看
+
+安装、启动[后端项目](https://github.com/WuhanZhuRong/platform-common-v7.git)
+
+## Technology Stack
+
+-   语言: [JavaScript](https://www.javascript.com)
+-   框架: [React](https://reactjs.org)
+-   UI组件: [ANT Design](https://ant.design)
+-   状态管理: [Redux](https://redux.js.org)
