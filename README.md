@@ -42,7 +42,7 @@ $ yarn start # http://localhost:3000
 
 [FAQ常见问题](#FAQ)
 
-# [WuhanZhuRong祝融](https://github.com/ChinaZhuRong)
+# [WuhanZhuRong祝融](https://github.com/WuhanZhuRong)
 
 ---
 
@@ -67,7 +67,7 @@ $ yarn start # http://localhost:3000
     
 -   如何使用我们产品<a name="introduce_use"></a>
 
-    进入[平台首页](https://czr.vipdesk.cn/search),点击开始捐助，选择您拥有的物资，和希望捐赠的城市，点击匹配，即可获取信息列表。
+    进入[平台首页](https://czr.vipdesk.cn),点击开始捐助，选择您拥有的物资，和希望捐赠的城市，点击匹配，即可获取信息列表。
     
 -   功能规划<a name="introduce_planning"></a>
 
