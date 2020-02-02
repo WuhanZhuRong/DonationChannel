@@ -30,20 +30,22 @@ const Title = styled.h1`
 `;
 const AffixBottom = styled.div`
   width: 90%;
-  position: fixed;
-  bottom: 10px;
-  margin-left: 5%;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
 `;
 const Container = styled.div`
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  .am-navbar {
+    flex-shrink: 0;
+  }
 `;
 const MainContent = styled.div`
-  flex: 1 0 auto;
-  margin-bottom: 60px;
+  flex: 1 1 auto;
+  overflow: scroll;
 `;
 
 function Supply(props) {
@@ -139,23 +141,20 @@ class Search extends React.Component {
     });
 
     let cityCodeArr = [];
-    let antdDistrict = [];
-    Object.keys(districtData).forEach(index => {
-      let itemLevel1 = {};
-      itemLevel1.value = districtData[index].code;
-      itemLevel1.label = districtData[index].name;
-      itemLevel1.children = [];
-      let data = districtData[index].cities;
-      Object.keys(data).forEach(index => {
-        if (data[index].code === cityCode) {
-          cityCodeArr = [itemLevel1.value, cityCode];
-        }
-        let itemLevel2 = {};
-        itemLevel2.value = data[index].code;
-        itemLevel2.label = data[index].name;
-        itemLevel1.children.push(itemLevel2);
-      });
-      antdDistrict.push(itemLevel1);
+    let antdDistrict = Object.values(districtData).map(province => {
+      return {
+        value: province.code,
+        label: province.name,
+        children: Object.values(province.cities).map(city => {
+          if (city.code === cityCode) {
+            cityCodeArr = [province.code, cityCode];
+          }
+          return {
+            value: city.code,
+            label: city.name,
+          };
+        })
+      };
     });
     this.setState({
       antdDistrict,
