@@ -105,8 +105,9 @@ class Hospitals extends React.Component {
       const hospital = hospitals[rowID];
       const onClick = () => this.props.history.push("/hospitals/" + hospital.id);
       return (
-        <StyledCard full onClick={onClick}>
+        <StyledCard full >
           <Card.Header
+            onClick={onClick}
             title={
               <span style={{ width: "100%", lineHeight: "30px" }}>
                 <span
