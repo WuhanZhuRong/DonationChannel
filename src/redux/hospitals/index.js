@@ -28,8 +28,7 @@ function fetchHospitalsSuccess(responseData) {
 
 //reducer
 const initialState = {
-  ids: [],
-  byId: {}, // TODO: should be removed
+  data: [],
   hasNextPage: true
 };
 
@@ -37,33 +36,21 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case "FETCH_HOSPITALS_SUCCESS":
       const { data, hasPreviousPage, hasNextPage } = action.responseData;
-      const rebasedData = rebaseHospitalData(data);
       if(hasPreviousPage) {
         return {
           ...state,
-          ids: [...state.ids, ...rebasedData.ids],
-          byId: { ...state.byId, ...rebasedData.byId }
+          data:  [...state.data, ...data]
         };
       }else {
-        return { ...state, ...rebasedData };
+        return { ...state, data };
       }
     default:
       return state;
   }
 }
 
-function rebaseHospitalData(remoteData) {
-  let ids = [];
-  let byId = {};
-  remoteData && remoteData.forEach(hospital => {
-    ids.push(hospital["id"]);
-    byId[hospital["id"]] = hospital;
-  });
-  return { ids, byId };
-}
-
 //selector
 
 export function selectAllHospital(hospitals) {
-  return hospitals.ids.map(id => hospitals.byId[id]);
+  return hospitals.data;
 }

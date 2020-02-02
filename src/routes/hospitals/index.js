@@ -231,7 +231,7 @@ class Hospitals extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    hospitals: selectAllHospital(state.hospitals),
+    hospitals: state.hospitals.data,
     filter: state.demand.filter,
     supplies: state.demand.flatSupplies,
     hasNextPage: state.hospitals.hasNextPage
