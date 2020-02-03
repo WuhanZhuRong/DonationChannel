@@ -1,14 +1,74 @@
 import React from "react";
-import { Card, Icon, List, Modal, NavBar, Toast } from "antd-mobile";
-import "./style.css";
+import { Card, Icon, List, NavBar, Toast } from "antd-mobile";
 import { API_GET_HOSPITAL_BY_ID, get } from "../../utils/api";
 import copy from "copy-to-clipboard";
+import styled from "styled-components";
+
+const StyledCard = styled(Card)`
+.detail-card-header {
+  width: 100%;
+  padding: 0 40px;
+}
+
+.detail-card-body {
+  padding: 0 40px 40px 40px;
+}
+
+.detail-card-body-category-list {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+.detail-card-body-category-list-item {
+  padding-left: 20px;
+}
+
+.detail-card-body-category-list-item .am-list-content,
+.am-list-extra {
+  font-size: 13px !important;
+}
+
+.detail-card-body-category-list-item-count {
+  position: relative;
+  margin-right: 16px;
+}
+
+.detail-card-body-category-list-item-count:after {
+  content: " ";
+  position: absolute;
+  right: -14px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 4px;
+}
+
+.detail-card-header table {
+  tbody {
+    vertical-align: inherit;
+  }
+
+  td:first-child {
+    width: 60px;
+    text-align: center;
+    display: inline-block;
+    font-size: 13px;
+    color: #555;
+    margin-right: 8px;
+  }
+
+  i {
+    font-size: 20px;
+    padding: 8px;
+  }
+}
+`;
 
 class Detail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showContactBox: false,
       hospital: {}
     };
   }
@@ -52,35 +112,39 @@ class Detail extends React.Component {
         >
           医院需求详情
         </NavBar>
-        <Card className="detail-card" full>
+        <StyledCard full>
           <Card.Header
             title={
               <div className="detail-card-header">
-                <div className="detail-card-header-left">
-                  <h3 className="detail-card-header-left-name">
-                    {hospital.name}
-                  </h3>
-
-                  <div className="detail-card-header-left-address">
-                    <p>地址： {hospital.address}</p>
-                  </div>
-                </div>
-                <div className="detail-card-header-right">
-                  <span
-                    className="detail-card-header-right-phone"
-                    onClick={() => this.setState({ showContactBox: true })}
-                  >
-                    <i className="ai-phone" />
-                  </span>
-                  <span className="detail-card-header-right-copy">
-                    <i
-                      className="ai-home"
-                      onClick={() =>
-                        this.copyToClickBoard(hospital.address, "医院地址")
-                      }
-                    />
-                  </span>
-                </div>
+                <h3>
+                  {hospital.hospital}
+                </h3>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        联系方式:
+                      </td>
+                      <td>
+                        <a href={`tel://${hospital.mobile}`}>{hospital.mobile}</a>
+                      </td>
+                      <td>
+                        <i className="ai-phone" onClick={() => this.copyToClickBoard(hospital.mobile, "联系方式")} />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:
+                      </td>
+                      <td>
+                        <span>{hospital.street}</span>
+                      </td>
+                      <td>
+                        <i className="ai-home" onClick={() => this.copyToClickBoard(hospital.street, "医院地址")} />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             }
           />
@@ -110,23 +174,7 @@ class Detail extends React.Component {
                 </div>
               ))}
           </Card.Body>
-        </Card>
-        <Modal
-          visible={this.state.showContactBox}
-          transparent
-          maskClosable={false}
-          onClose={() => this.setState({ showContactBox: false })}
-          afterClose={() => this.copyToClickBoard(hospital.phone, "联系方式")}
-          title=""
-          footer={[
-            {
-              text: "我知道了",
-              onPress: () => this.setState({ showContactBox: false })
-            }
-          ]}
-        >
-          <div>{hospital.phone}</div>
-        </Modal>
+        </StyledCard>
       </div>
     );
   }

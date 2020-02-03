@@ -3,9 +3,9 @@ import { get, API_GET_SUPPLIES } from "../../utils/api";
 //reducer
 const initialState = {
   filter: {
-    cityCode: "",
+    cityCode: "420100", // 湖北武汉
     supplies: [],
-    cityName: ""
+    cityName: "武汉市"
   },
   allSupplies: [],
   flatSupplies: []
@@ -18,14 +18,14 @@ export const demandActions = {
   },
   changeSelectedSupplies(supply, isAdd = true) {
     return isAdd
-        ? {
+      ? {
           type: "ADD_SUPPLY_TO_FILTER",
           supply
         }
-        : {
+      : {
           type: "REMOVE_SUPPLY_FROM_FILTER",
           supply
-        }
+        };
   },
   fetchSupplies() {
     return dispatch =>
@@ -49,7 +49,14 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         allSupplies: action.data,
-        flatSupplies: action.data.flatMap(each => each.types)
+        // TODO: 现在层级关系有问题 避免重复出现父类重名子类，前端逻辑上做了些hack，之后要讨论下怎么修正
+        // 在hospitals中用到的筛选器中，子类里过滤了父类的同名类
+        flatSupplies: action.data
+          .flatMap(each => each.types)
+          // hack code start
+          .filter(
+            each => !action.data.map(each => each.name).includes(each.name)
+          )
       };
     case "SET_DEMANDS_FILTER":
       return {
@@ -67,7 +74,9 @@ export default function reducer(state = initialState, action) {
     case "REMOVE_SUPPLY_FROM_FILTER":
       const { supplies } = state.filter;
       const index = supplies.indexOf(action.supply);
-      const newSupplies = [...supplies].splice(index, 1);
+      let newSupplies = [...supplies];
+      newSupplies.splice(index, 1);
+      console.log(index, newSupplies)
       return {
         ...state,
         filter: {

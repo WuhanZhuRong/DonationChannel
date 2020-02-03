@@ -1,0 +1,40 @@
+name: Deploy to Aliyun OSS CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: true
+    - uses: srt32/git-actions@v0.0.3
+      with:
+        args: git submodule update --init --recursive
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm, yarn install and build
+      run: |
+        npm install
+        npm install yarn yarn-cli
+        yarn install --frozen-lockfile
+        yarn build
+    - name: setup aliyun oss
+      uses: manyuanrong/setup-ossutil@master
+      with:
+        endpoint: oss-cn-shanghai.aliyuncs.com
+        access-key-id: ${{ secrets.OSS_ACCESS_KEY_ID }}
+        access-key-secret: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+    - name: cp files to aliyun
+      run: ossutil cp -rf build/ oss://zhurong/

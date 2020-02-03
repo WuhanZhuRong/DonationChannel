@@ -13,36 +13,48 @@ const TagContainer = styled.div`
   padding-top: 9px;
   flex-direction: row;
   flex-wrap: wrap;
-  div {
-    margin-left: 9px;
-    margin-bottom: 9px;
+  width: 100%;
+
+  .am-tag {
+    height: auto;
+    margin-left: 8px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    padding: 5px 15px;
   }
 `;
 const Title = styled.h1`
   font-size: 14px;
   margin-left: 9px;
   margin-bottom: 0px;
-  .select {
-    float: right;
-    color: #108ee9;
-    margin-right: 9px;
-  }
 `;
+
+const SelectButton = styled.span`
+  float: right;
+  color: #108ee9;
+  font-size: 15px;
+  margin-top: -10px;
+  padding: 10px;
+`
+
 const AffixBottom = styled.div`
-  flex: 0 0 auto;
+  width: 90%;
+  margin: auto;
   margin-bottom: 10px;
-  margin-left: 9px;
-  margin-right: 9px;
+  margin-top: 10px;
 `;
 const Container = styled.div`
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  .am-navbar {
+    flex-shrink: 0;
+  }
 `;
 const MainContent = styled.div`
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  overflow: scroll;
 `;
 
 function Supply(props) {
@@ -57,23 +69,24 @@ function Supply(props) {
       <div key={supply.name}>
         <Title>
           {supply.name}
-          <span
+          <SelectButton
             onClick={() => props.handleSelectAll(supply.name)}
-            className="select"
           >
             {selectedAll ? "取消全选" : "全选"}
-          </span>
+          </SelectButton>
         </Title>
         <TagContainer>
-          {supply.types.map(type => (
-            <Tag
-              key={type.id}
-              selected={props.supplies.includes(type.id)}
-              onChange={selected => props.handleSelect(type.id, selected)}
-            >
-              {type.name}
-            </Tag>
-          ))}
+          {supply.types
+            .filter(type => type.name !== supply.name)
+            .map(type => (
+              <Tag
+                key={type.id}
+                selected={props.supplies.includes(type.id)}
+                onChange={selected => props.handleSelect(type.id, selected)}
+              >
+                {type.name}
+              </Tag>
+            ))}
         </TagContainer>
       </div>
     );
@@ -136,23 +149,20 @@ class Search extends React.Component {
     });
 
     let cityCodeArr = [];
-    let antdDistrict = [];
-    Object.keys(districtData).forEach(index => {
-      let itemLevel1 = {};
-      itemLevel1.value = districtData[index].code;
-      itemLevel1.label = districtData[index].name;
-      itemLevel1.children = [];
-      let data = districtData[index].cities;
-      Object.keys(data).forEach(index => {
-        if (data[index].code === cityCode) {
-          cityCodeArr = [itemLevel1.value, cityCode];
-        }
-        let itemLevel2 = {};
-        itemLevel2.value = data[index].code;
-        itemLevel2.label = data[index].name;
-        itemLevel1.children.push(itemLevel2);
-      });
-      antdDistrict.push(itemLevel1);
+    let antdDistrict = Object.values(districtData).map(province => {
+      return {
+        value: province.code,
+        label: province.name,
+        children: Object.values(province.cities).map(city => {
+          if (city.code === cityCode) {
+            cityCodeArr = [province.code, cityCode];
+          }
+          return {
+            value: city.code,
+            label: city.name,
+          };
+        })
+      };
     });
     this.setState({
       antdDistrict,
@@ -204,8 +214,23 @@ class Search extends React.Component {
     if (cityCode && cityCode.length >= 2) {
       cityName = districtData[cityCode[0]]["cities"][cityCode[1]]["name"];
     }
+    // 记录大类，因为有些医院只有大类没有小类，要作为筛选条件
+    // 只要该大类下有被选中的，该大类映射的小类就被选中
+    const additionalSupplies = this.props.allSupplies
+      .filter(supply => {
+        return supplies.some(each =>
+          supply.types.map(each => each.id).includes(each)
+        );
+      })
+      // 判断每个类别的重名子类
+      .map(supply => {
+        const arr = supply.types.filter(type => type.name === supply.name);
+        return arr && arr.length && arr[0].id;
+      })
+      .filter(each => each);
+
     this.props.setDemandsFilter({
-      supplies,
+      supplies: supplies.concat(additionalSupplies),
       cityCode: cityCode.length >= 2 && cityCode[1],
       cityName
     });

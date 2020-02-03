@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
 import {
   Badge,
   WhiteSpace,
@@ -15,14 +16,25 @@ import {
   Button
 } from "antd-mobile";
 import "./style.css";
-import { hospitalActions, selectAllHospital } from "../../redux/hospitals";
+import { hospitalActions } from "../../redux/hospitals";
 import { bindActionCreators } from "redux";
-import { Link } from "react-router-dom";
 import copy from "copy-to-clipboard";
 import { demandActions } from "../../redux/demand";
 
-let page;
-const size = 10;
+const PAGE_SIZE = 10;
+
+const StyledCard = styled(Card)`
+  margin-bottom: 10px;
+
+  .card-action-icon {
+    padding: 8px;
+    font-size: 20px;
+  }
+
+  .am-card-footer {
+    border-top: #eee 1px solid;
+  }
+`;
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Hospitals extends React.Component {
@@ -35,7 +47,8 @@ class Hospitals extends React.Component {
       dataSource,
       hospitals: [],
       isLoading: false,
-      hasNextPage: true
+      hasNextPage: true,
+      page: 0,
     };
   }
 
@@ -59,8 +72,9 @@ class Hospitals extends React.Component {
   }
 
   reloadData() {
-    page = 1;
-    this.props.searchHospital(this.props.filter, page++, size);
+    let { page } = this.state;
+    this.props.searchHospital(this.props.filter, page + 1, PAGE_SIZE);
+    this.setState({ page: page + 1 })
   }
 
   onEndReached = event => {
@@ -70,8 +84,10 @@ class Hospitals extends React.Component {
     if (this.state.isLoading) {
       return;
     }
-    this.setState({ isLoading: true });
-    this.props.searchHospitalInAdditional(this.props.filter, page++, size);
+    let { page } = this.state;
+    this.props.searchHospital(this.props.filter, page + 1, PAGE_SIZE);
+
+    this.setState({ isLoading: true, page: page + 1 });
   };
 
   copyToClickBoard = (res, type) => {
@@ -87,9 +103,11 @@ class Hospitals extends React.Component {
 
     const row = (rowData, sectionID, rowID) => {
       const hospital = hospitals[rowID];
+      const onClick = () => this.props.history.push("/hospitals/" + hospital.id);
       return (
-        <Card full style={{ marginBottom: "10px" }}>
+        <StyledCard full >
           <Card.Header
+            onClick={onClick}
             title={
               <span style={{ width: "100%", lineHeight: "30px" }}>
                 <span
@@ -98,7 +116,7 @@ class Hospitals extends React.Component {
                     float: "left"
                   }}
                 >
-                  {hospital.name}
+                  {hospital.hospital}
                 </span>
                 <span style={{ float: "right" }}>
                   <Badge text={hospital.province} />
@@ -106,7 +124,7 @@ class Hospitals extends React.Component {
               </span>
             }
           />
-          <Card.Body>
+          <Card.Body onClick={onClick}>
             {hospital.supplies &&
               (hospital.supplies.map(supply => (
                 <div key={supply.name} className="card-supplies">
@@ -122,7 +140,7 @@ class Hospitals extends React.Component {
                   <div
                     className="card-action-icon"
                     onClick={() =>
-                      this.copyToClickBoard(hospital.phone, "联系方式")
+                      this.copyToClickBoard(hospital.mobile, "联系方式")
                     }
                   >
                     <i className="ai-phone" />
@@ -132,27 +150,16 @@ class Hospitals extends React.Component {
                   <div
                     className="card-action-icon"
                     onClick={() =>
-                      this.copyToClickBoard(hospital.address, "医院地址")
+                      this.copyToClickBoard(hospital.street, "医院地址")
                     }
                   >
                     <i className="ai-home" />
                   </div>
                 </Flex.Item>
-                <Flex.Item>
-                  <Link
-                    className="card-action-icon"
-                    to={"/hospitals/" + hospital.id}
-                  >
-                    <Icon size="md" type="ellipsis" />
-                  </Link>
-                </Flex.Item>
               </Flex>
             }
           />
-        </Card>
-        // <Card className="hospital-card" key={hospital.id} full>
-
-        // </Card>
+        </StyledCard>
       );
     };
 
@@ -210,7 +217,7 @@ class Hospitals extends React.Component {
           )}
           renderRow={row}
           className="list_view"
-          pageSize={size}
+          pageSize={PAGE_SIZE}
           useBodyScroll
           onScroll={() => {}}
           scrollRenderAheadDistance={500}
@@ -224,7 +231,7 @@ class Hospitals extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    hospitals: selectAllHospital(state.hospitals),
+    hospitals: state.hospitals.data,
     filter: state.demand.filter,
     supplies: state.demand.flatSupplies,
     hasNextPage: state.hospitals.hasNextPage
