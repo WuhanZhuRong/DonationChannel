@@ -20,8 +20,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm, yarn install and build
       run: |
-        npm install
-        npm install yarn yarn-cli
         yarn install --frozen-lockfile
         yarn build
     - name: setup aliyun oss
