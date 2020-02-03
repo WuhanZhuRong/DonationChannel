@@ -58,7 +58,7 @@ class ContactInfo extends React.Component {
               <PlaceHolder>
                 <div className="title">
                   <i className="ai-phone" />
-                  联系电话：
+                  联系电话
                 </div>
               </PlaceHolder>
             </Flex.Item>
