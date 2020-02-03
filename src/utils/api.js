@@ -9,7 +9,7 @@ export function post(url, body, params) {
 }
 
 const basic = 'https://czr-api.vipdesk.cn/api/';
-// const basic = 'http://localhost:8181/zhurong/';
+// const basic = 'http://localhost:8181/api/';
 
 export const API_GET_HOSPITALS = `${basic}hospitals`;
 

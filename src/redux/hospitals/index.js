@@ -1,4 +1,4 @@
-import { get, API_GET_HOSPITALS } from "../../utils/api";
+import { post, API_GET_HOSPITALS } from "../../utils/api";
 // action
 export const hospitalActions = {
   searchHospital(filter, page, size) {
@@ -8,8 +8,9 @@ export const hospitalActions = {
       filter.supplies
     );
     return dispatch =>
-      get(API_GET_HOSPITALS, {
+      post(API_GET_HOSPITALS, {
         city: filter.cityName,
+        supplies: filter.supplies,
         page,
         size
       }).then(res =>
