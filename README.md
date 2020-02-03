@@ -167,5 +167,5 @@ $ yarn start # http://localhost:3000
 
 -   语言: [JavaScript](https://www.javascript.com)
 -   框架: [React](https://reactjs.org)
--   UI组件: [ANT Design](https://ant.design)
+-   UI组件: [Ant Design Mobile](https://mobile.ant.design)
 -   状态管理: [Redux](https://redux.js.org)
