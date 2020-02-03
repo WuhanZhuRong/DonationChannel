@@ -28,7 +28,7 @@ class ContactInfo extends React.Component {
               </p>
               <Button type="primary" onClick={this.onNavigateTo.bind(this, '/search')}>开始捐助</Button>
               <WhiteSpace />
-              <Button type="warning">求助物资</Button>
+              {/*<Button type="warning">求助物资</Button>*/}
               <WhiteSpace />
             </Card.Body>
           </Card>
