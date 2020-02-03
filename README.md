@@ -1,13 +1,7 @@
-# [WuhanZhuRong祝融](https://github.com/WuhanZhuRong)
+# [WuhanZhuRong 祝融](https://github.com/WuhanZhuRong)
+针对 2020 年初在武汉爆发的新型冠状病毒疫情，[祝融公益平台](https://github.com/WuhanZhuRong)的同学在一场[DoraHacks](https://dorahacks.com/)组织的[2019-nCoV黑客马拉松](https://mp.weixin.qq.com/s/mre0XVeTzsNP90sVWjFs5g)中成立，由最初的星星之火，发展到现在分布全球各地数十位同学。大家在几天内集思广益，以技术为手段，正在探讨建设 疫区物资信息对接平台， 疫区物资可视化地图等产品，希望可以为抗击疫情做出一些贡献。
 
----
-
-
-为了阻挡病毒的肆虐，武汉的医护人员已经在尽职坚守，上海浙江的医护专家已经奔赴武汉，全国各地的医护专家已经整装待发。
-
-为了病人，为了中国，为了我们所有人，他们在恐惧中，仍然无畏地冲向最前线。
-
-这场血淋淋的战争没有弥漫的硝烟，却充斥着令人生畏的病毒。祝融平台的成员们来自五湖四海，在一场由[DoraHack](https://dorahacks.com/)组织的[黑客马拉松](https://mp.weixin.qq.com/s/mre0XVeTzsNP90sVWjFs5g)中相遇，由最初的几个人，到现在三十多号人，我们在两天前，从0开始，慢慢探索，希望以技术为手段为控制疫情做出一些贡献。
+一方有难，八方支援，爱是一架坚固的桥梁。如果你也想为祖国尽一份力，让疫情早日退去，欢迎[加入我们](#contact)，ZhuRong大家庭！
 
 ## Content
 [平台简介](#introduce)
