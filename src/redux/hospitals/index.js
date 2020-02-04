@@ -10,11 +10,10 @@ export const hospitalActions = {
     return dispatch =>
       get(API_GET_HOSPITALS, {
         city: filter.cityName,
+        supplies: filter.supplies,
         page,
         size
-      }).then(res =>
-        dispatch(fetchHospitalsSuccess(res.data))
-      );
+      }).then(res => dispatch(fetchHospitalsSuccess(res.data)));
   }
 };
 
@@ -35,14 +34,15 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case "FETCH_HOSPITALS_SUCCESS":
-      const { data, hasPreviousPage, hasNextPage } = action.responseData;
-      if(hasPreviousPage) {
+      let { data, hasPreviousPage, hasNextPage } = action.responseData;
+      data = data.filter(each => each.supplies && each.supplies.length);
+      if (hasPreviousPage) {
         return {
           ...state,
           hasNextPage,
-          data:  [...state.data, ...data]
+          data: [...state.data, ...data]
         };
-      }else {
+      } else {
         return {
           ...state,
           hasNextPage,
