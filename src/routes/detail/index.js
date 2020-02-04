@@ -163,7 +163,7 @@ class Detail extends React.Component {
                         className="detail-card-body-category-list-item"
                         extra={
                           <span className="detail-card-body-category-list-item-count">
-                            {supply.count || "不限"}
+                            {(supply.amount && supply.amount > 0)? supply.amount : "不限"}
                           </span>
                         }
                       >
