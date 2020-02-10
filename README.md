@@ -46,7 +46,7 @@
     
 -   如何使用我们产品<a name="introduce_use"></a>
 
-    进入[平台首页](https://czr.vipdesk.cn),点击开始捐助，选择您拥有的物资，和希望捐赠的城市，点击匹配，即可获取信息列表。
+    进入[平台首页](https://czr.vipdesk.cn)，点击开始捐助，选择您拥有的物资，和希望捐赠的城市，点击匹配，即可获取信息列表。
     
 -   功能规划<a name="introduce_planning"></a>
 
@@ -63,10 +63,11 @@
 
 # 该平台主要开源项目<a name="project"></a>
 ##  Web 应用<a name="web"></a>
-信息撮合web
+物融中国疫区物资对接平台
 
 * 代码仓库：[https://github.com/WuhanZhuRong/DonationChannel](https://github.com/WuhanZhuRong/DonationChannel)
 * 正式环境：[https://czr.vipdesk.cn](https://czr.vipdesk.cn)
+* 宣传链接：[https://mp.weixin.qq.com/s/-f9FwvIC_W6-vEwChb1EUA](https://mp.weixin.qq.com/s/-f9FwvIC_W6-vEwChb1EUA)
 
 疫情地图web
 
@@ -122,21 +123,19 @@
 
 * 微信小组
 
-微信小组名称 | 小组负责人 |
+微信小组名称 | 主要成员 |
 ------------ | -------------
-产品组   |    
-设计组   |
-运营组   |    
-前端组   |    
-后端组   |    
-后端技能组   |    
-信息撮合组   |    
-疫情地图可视化组   |    
-数据地图可视化组   |    
-地图故事产品组   |    
-产品文档组   |    
-AI项目产品组   |    
-志愿者组   |    
+产品组   | HenryHenry, yuanyuan 
+产品文档组   | HenryHenry 
+设计组   | 
+运营组   | Meio, 王文勃    
+前端组   | 
+数据组   |    
+后端组   |     
+信息撮合组   | 已上线,    
+疫情地图可视化组   | 待上线,    
+数据地图可视化组   | 待上线,    
+地图故事产品组   | 待开发,    
 
 欢迎大家加入共同探讨各类技术或非技术类问题，让我们大家一起齐心协力，众志成城，共克时艰！
 
