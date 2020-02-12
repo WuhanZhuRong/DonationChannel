@@ -40,6 +40,8 @@ const StyledCard = styled(Card)`
 class Hospitals extends React.Component {
   constructor(props) {
     super(props);
+    console.log('hospitals');
+    console.log(props);
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2
     });

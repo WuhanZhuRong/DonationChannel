@@ -28,3 +28,7 @@ export const API_GET_HOSPITALS = `${basic}hospitals`;
 export const API_GET_HOSPITAL_BY_ID = id => `${basic}hospitals/${id}`;
 
 export const API_GET_SUPPLIES = `${basic}supplies`;
+
+export const API_GET_NEARBYHOSPITALS = `${basic}findNearbyHospitals`;
+
+export const API_GET_TOTALDEMANDS = `${basic}getTotalDemands`;

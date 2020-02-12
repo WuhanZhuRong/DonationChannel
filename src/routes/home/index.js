@@ -4,6 +4,7 @@ import "./style.css";
 import ContactInfo from "../contact-info";
 import Records from "../records";
 import Match from "../match";
+import DemandsMap from "../demandsMap";
 import { withRouter } from "react-router-dom";
 
 @withRouter
@@ -87,6 +88,38 @@ class MainTabBar extends React.Component {
           >
             {this.renderContent(<Match />)}
           </TabBar.Item>
+          <TabBar.Item
+            icon={
+              <div
+                style={{
+                  width: "22px",
+                  height: "22px",
+                  background:
+                    "url(/demandsMap_grey.png) center center /  16px 16px no-repeat"
+                }}
+              />
+            }
+            selectedIcon={
+              <div
+                style={{
+                  width: "22px",
+                  height: "22px",
+                  background:
+                    "url(/demandsMap.png) center center /  16px 16px no-repeat"
+                }}
+              />
+            }
+            title="需求地图"
+            key="demandsMap"
+            selected={this.state.selectedTab === "demandsMap"}
+            onPress={() => {
+              this.props.history.replace(`/demandsMap`);
+              this.setState({selectedTab: "demandsMap"});
+            }}
+            data-seed="logId1"
+          >
+            {this.renderContent(<DemandsMap />)}
+          </TabBar.Item>          
           <TabBar.Item
             icon={
               <div
