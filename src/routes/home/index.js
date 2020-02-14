@@ -95,7 +95,7 @@ class MainTabBar extends React.Component {
                   width: "22px",
                   height: "22px",
                   background:
-                    "url(/demandsMap_grey.png) center center /  16px 16px no-repeat"
+                    "url(/demandsMap_grey.png) center center /  21px 21px no-repeat"
                 }}
               />
             }
@@ -105,7 +105,7 @@ class MainTabBar extends React.Component {
                   width: "22px",
                   height: "22px",
                   background:
-                    "url(/demandsMap.png) center center /  16px 16px no-repeat"
+                    "url(/demandsMap.png) center center /  21px 21px no-repeat"
                 }}
               />
             }
@@ -119,7 +119,7 @@ class MainTabBar extends React.Component {
             data-seed="logId1"
           >
             {this.renderContent(<DemandsMap />)}
-          </TabBar.Item>          
+          </TabBar.Item>
           <TabBar.Item
             icon={
               <div

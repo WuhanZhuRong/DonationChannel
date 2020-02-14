@@ -1,6 +1,6 @@
 import React from "react";
 import { NavBar, Flex } from "antd-mobile";
-import qr_code_url from "../../assets/group-qrcode.jpg";
+import qr_code_url from "../../assets/group-qrcode.png";
 import styled from "styled-components";
 
 const Line = styled.div`
