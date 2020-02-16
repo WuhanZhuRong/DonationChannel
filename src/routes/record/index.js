@@ -1,5 +1,5 @@
 import React from "react";
-import { NavBar, Icon, Card, List } from "antd-mobile";
+import { NavBar, Icon, List } from "antd-mobile";
 import "./style.css";
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -12,9 +12,9 @@ class ContactInfo extends React.Component {
   }
 
   componentDidMount() {
-    const { match = {} } = this.props;
-    const { params = {} } = match;
-    const { id = "" } = params;
+    // const { match = {} } = this.props;
+    // const { params = {} } = match;
+    // const { id = "" } = params;
     this.setState({
       record: {
         name: "启航",
@@ -85,7 +85,7 @@ class ContactInfo extends React.Component {
           </Item>
         </List>
         <List renderHeader={() => "受助单位"} className="my-list">
-          <Item multipleLine extra={<a>查看详情</a>}>
+          <Item multipleLine extra={<a href='#detail'>查看详情</a>}>
             XXX医院 <Brief>武汉市 XX区</Brief>
           </Item>
         </List>

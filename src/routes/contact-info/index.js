@@ -49,7 +49,7 @@ class ContactInfo extends React.Component {
     return (
       <div>
         <NavBar mode="dark">联系我们</NavBar>
-        <img style={{ width: "50%" }} src={qr_code_url} />
+        <img style={{ width: "50%" }} src={qr_code_url} alt='qrCode' />
         <div>扫码入群</div>
         <Line />
         <StyledTable>
@@ -93,6 +93,7 @@ class ContactInfo extends React.Component {
           <a
             href="https://github.com/WuhanZhuRong/DonationChannel"
             target="_blank"
+            rel="noopener noreferrer"
           >
             https://github.com/WuhanZhuRong/DonationChannel
           </a>
@@ -105,6 +106,7 @@ class ContactInfo extends React.Component {
             className="feedback"
             href="https://www.wjx.cn/jq/54804929.aspx"
             target="_blank"
+            rel="noopener noreferrer"
           >
             点我一键反馈
           </a>

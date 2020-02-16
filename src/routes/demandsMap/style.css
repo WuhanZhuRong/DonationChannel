@@ -154,12 +154,21 @@
 }
 .hospitalInfo .contact .top .right{
   flex: 1;
-  height: 20px;
   line-height: 20px;
+  color: white;
+}
+
+.hospitalInfo .contact .top .right>div{
+  height: 20px;
+  margin-bottom: 5px;
   padding: 0 5px 0 5px;
   border-radius: 15px;
-  color: white;
   background-color: #e94f4f;
+}
+
+.hospitalInfo .contact .top .right>div>a{
+  text-decoration:none;
+  color:white;
 }
 
 .hospitalInfo .contact .top .left .name{

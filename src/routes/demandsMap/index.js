@@ -6,8 +6,7 @@ import {
 import {
   Map,
   Base,
-  Marker,
-  BMapUtil
+  Marker
 } from 'rc-bmap';
 import "./style.css";
 import { demandsMapAction } from "../../redux/demandsMap";
@@ -125,7 +124,11 @@ class DemandsMap extends React.Component {
                   <div className="name">医院对接人： { currentHospital.contacts }</div>
                   <div className="phone"><span className="phoneTitle">对接人电话：</span> <span className="phoneNumber">{currentHospital.mobile }</span></div>
                 </div>
-                <div className="right" onClick={()=> this.copyToClickBoard(currentHospital)}>复制</div>
+                <div className="right">
+                  <div onClick={()=> this.copyToClickBoard(currentHospital)}>复制</div>
+                  <div><a href='https://www.wjx.top/jq/57775916.aspx' target='_blank' rel='noopener noreferrer'>血浆捐助</a></div>
+                </div>
+
               </div>
               <div className="bottom">捐赠地址： { currentHospital.province + currentHospital.city +  currentHospital.area + currentHospital.street }</div>
             </div>
