@@ -6,8 +6,7 @@ import {
 import {
   Map,
   Base,
-  Marker,
-  BMapUtil
+  Marker
 } from 'rc-bmap';
 import "./style.css";
 import { demandsMapAction } from "../../redux/demandsMap";
