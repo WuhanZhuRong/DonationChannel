@@ -189,6 +189,9 @@
   color: #e94f4f;
   opacity: 1;
   font-weight: bold;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;  
 }
 .hospitalInfo .contact .bottom {
   overflow-x: scroll;

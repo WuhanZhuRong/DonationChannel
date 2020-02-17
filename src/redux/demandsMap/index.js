@@ -1,14 +1,14 @@
 import { get, API_GET_NEARBYHOSPITALS, API_GET_TOTALDEMANDS } from "../../utils/api";
 // action
 export const demandsMapAction = {
-  getNearbyHospitals(location) {
+  getNearbyHospitals(location={}) {
     return dispatch =>
       get(API_GET_NEARBYHOSPITALS, {
-        distance: 10,
-        longitude: 114.292444,
-        latitude: 30.672016,
+        distance: 20,
+        longitude: location.longitude || 114.292444,
+        latitude: location.latitude || 30.672016,
         page: 1,
-        size: 30
+        size: 50
       }).then(res => {
         return dispatch(fetchNearbyHospitalsSuccess(res.data))
       });    
@@ -22,13 +22,13 @@ export const demandsMapAction = {
   updateCurrentHospital(id) {
     return dispatch => dispatch(updateCurrentHospitalSuccess(id))
   },
-  getInitialLocation() {
+  getInitialLocation(location={}) {
     return {
       type: 'FETCH_INITAILLOCATION_SUCCESS',
       data: {
         initialLocation: {
-          longitude: 114.292444,
-          latitude: 30.602016
+          longitude: location.longitude || 114.292444,
+          latitude: location.latitude - 0.07 || 30.672016 - 0.07
         }        
       }
     }
