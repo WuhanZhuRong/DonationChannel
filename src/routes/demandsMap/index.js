@@ -21,31 +21,22 @@ import copy from "copy-to-clipboard";
 @connect(mapStateToProps, mapDispatchToProps)
 class DemandsMap extends React.Component {
   componentDidMount() {
-    this.props.getNearbyHospitals();
     this.props.getTotalDemands();
-
-  
-      //地图初始状态
-      if(navigator.geolocation) {
-        // let options = {
-        //   enableHighAccuracy:true,
-        //   maximumAge:1000,
-        // };
-        navigator.geolocation.getCurrentPosition(
-          (location)=>{
-            console.log('======');
-            console.log(location);
-          },
-          (err)=>{
-            console.log(err);
-            console.log('1');
-          }
-        );
-      } else {
-        console.log('fuck');
-      }
-
-    this.props.getInitialLocation();
+    this.props.getNearbyHospitals();
+    this.props.getInitialLocation();    
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (location)=>{
+          this.props.getInitialLocation(location.coords);
+          this.props.getNearbyHospitals(location.coords);
+        },
+        (err)=>{
+          console.log(err);
+        }
+      );
+    } else {
+      console.log('你的浏览器不支持地理位置');
+    }
   }
   rebaseSupplies = (supplies = [])=> {
     let demands = '';
@@ -68,7 +59,15 @@ class DemandsMap extends React.Component {
     } else {
       Toast.fail('复制失败');
     }
-  }  
+  }
+
+  updateCurrentLocation = () => {
+    let location = {
+      longitude: window.demandsMap.getCenter().lng,
+      latitude: window.demandsMap.getCenter().lat
+    }
+    this.props.getNearbyHospitals(location);
+  }
 
   render() {
     const { Point, Events } = Base;
@@ -79,11 +78,15 @@ class DemandsMap extends React.Component {
           <Map
             ak="WAeVpuoSBH4NswS30GNbCRrlsmdGB5Gv"
             name="demandsMap"
-            zoom={12}
+            zoom={13}
             doubleClickZoom
             scrollWheelZoom
           >
           <Point name="center" lng={ initialLocation.longitude } lat={ initialLocation.latitude } />
+          <Events
+            dragend={() => this.updateCurrentLocation()} 
+            zoomend = {() => this.updateCurrentLocation()}
+          />
           
           {hospitals && hospitals.map((item) => (
             <Marker title={item.hospital} key={item.id}>
